@@ -12,7 +12,7 @@ Complete usage and documentation available at: [Jekyll Bootstrap](http://jekyllb
 ## Update Author Attributes
 
 In `_config.yml` remember to specify your own data:
-<code class="brush:plain">    
+<code class="brush:plain;">    
     title : My Blog =)
     
     author :
@@ -27,7 +27,7 @@ The theme should reference these variables whenever needed.
 
 This blog contains sample posts which help stage pages and blog data.
 When you don't need the samples anymore just delete the `_posts/core-samples` folder.
-<code class="brush:plain"> 
+<code class="brush:plain;"> 
     $ rm -rf _posts/core-samples
 </code>
 Here's a sample "posts list".
