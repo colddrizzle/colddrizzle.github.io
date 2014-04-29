@@ -10,6 +10,7 @@ pygments: true
 # so be sure to set them if your theme uses them.
 #
 title : ColdDrizzle's Blog
+description: Create an Ant!
 tagline: Create an Ant!
 author :
   name : colddrizzle
@@ -79,7 +80,7 @@ JB :
   # Settings for comments helper
   # Set 'provider' to the comment provider you want to use.
   # Set 'provider' to false to turn commenting off globally.
-  #
+  #如果用户登陆livefyre等将看不到评论，因为还没有注册
   comments :
     provider : disqus
     disqus :
@@ -97,7 +98,7 @@ JB :
   # Settings for analytics helper
   # Set 'provider' to the analytics provider you want to use.
   # Set 'provider' to false to turn analytics off globally.
-  #        
+  #  没有进行个性化设置      
   analytics :
     provider : google 
     google : 
