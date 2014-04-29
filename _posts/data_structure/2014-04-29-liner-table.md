@@ -6,4 +6,4 @@ tags : [intro, beginner, jekyll, tutorial]
 ---
 {% include JB/setup %}
 
-线性表啊线性表
+绾挎�ц〃鍟婄嚎鎬ц〃
