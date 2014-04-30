@@ -13,6 +13,8 @@ Complete usage and documentation available at: [Jekyll Bootstrap](http://jekyllb
 
 In `_config.yml` remember to specify your own data:
 
+<input type="hidden" class="brush" value="brush:plain;first-line:10;">
+
     title : My Blog =)
     
     author :
@@ -27,6 +29,8 @@ The theme should reference these variables whenever needed.
 
 This blog contains sample posts which help stage pages and blog data.
 When you don't need the samples anymore just delete the `_posts/core-samples` folder.
+
+<input type="hidden" class="brush" value="brush:plain;first-line:10;">
 
     $ rm -rf _posts/core-samples
     
