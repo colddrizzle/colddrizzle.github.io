@@ -9,12 +9,14 @@ title: 线性表
 
 线性表啊线性表
 
-<code class="brush:cpp;highlight:[11,13];first-line: 10;">
+{% highlight c linenos %}
     cout<<"Hello world!"<<endl;
+    
+    
     if(a<0){
         printf("Dont use pre!");
     }
-</code>
+{% endhighlight %}
 
 线性表啊
 
