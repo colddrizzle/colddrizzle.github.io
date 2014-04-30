@@ -6,7 +6,7 @@ exclude: [".rvmrc", ".rbenv-version", "README.md", "Rakefile", "changelog.md"]
 markdown: rdiscount
 pygments: false
 encoding: utf-8
-
+safe: true
 # Themes are encouraged to use these universal variables 
 # so be sure to set them if your theme uses them.
 #
@@ -81,7 +81,7 @@ JB :
   # Settings for comments helper
   # Set 'provider' to the comment provider you want to use.
   # Set 'provider' to false to turn commenting off globally.
-  #如果用户登陆livefyre等将看不到评论，因为还没有注册
+  #comments provider只有一个
   comments :
     provider : disqus
     disqus :
@@ -101,7 +101,7 @@ JB :
   # Set 'provider' to false to turn analytics off globally.
   #  没有进行个性化设置      
   analytics :
-    provider : google 
+    provider : cnzz 
     google : 
         tracking_id : 'UA-123-12'
     getclicky :
@@ -111,6 +111,8 @@ JB :
     piwik :
         baseURL : 'myserver.tld/piwik' # Piwik installation address (without protocol)
         idsite : '1'                   # the id of the site on Piwik
+    cnzz :
+        site_id :
 
   # Settings for sharing helper. 
   # Sharing is for things like tweet, plusone, like, reddit buttons etc.

@@ -47,4 +47,20 @@ Here's a sample "posts list".
 This theme is still unfinished. If you'd like to be added as a contributor, [please fork](http://github.com/plusjade/jekyll-bootstrap)!
 We need to clean up the themes, make theme usage guides with theme-specific markup examples.
 
-
+catagories_list:
+<ul>
+        {% assign categories_list = site.categories %}  
+        {% include JB/categories_list %}
+</ul>
+pages:
+<ul>
+    {% assign pages_list = site.pages %}  
+    {% include JB/pages_list %}
+</ul>
+posts_collate:
+    {% assign posts_collate = site.posts %}
+Tag list:
+<ul>
+  	  {% assign tags_list = site.tags %}  
+  	  {% include JB/tags_list %}
+</ul>
