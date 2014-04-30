@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+  <head profile="http://www.w3.org/2005/10/profile">
     <meta charset="utf-8">
     <title>{{ page.title }}</title>
     {% if page.description %}<meta name="description" content="{{ page.description }}">{% endif %}
@@ -20,12 +20,14 @@
     <link href='{{ ASSET_PATH }}/syntaxhighlighter_3.0.83/styles/shThemeDefault.css' rel='stylesheet' type='text/css'/>
 
     <!-- Le fav and touch icons -->
-  <!-- Update these with your own images
-    <link rel="shortcut icon" href="images/favicon.ico">
+  <!-- Update these with your own images-->
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon"/>
+  <!--
     <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
     <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
     <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
   -->
+    <script src='{{ ASSET_PATH }}/jquery-1.11.0.min.js' type='text/javascript'></script>
   </head>
 
   <body>
@@ -60,7 +62,6 @@
 
     {% include JB/analytics %}
   </body>
-    <script src='{{ ASSET_PATH }}/jquery-2.1.0.min.js' type='text/javascript'></script>
     <script src='{{ ASSET_PATH }}/syntaxhighlighter_3.0.83/scripts/shCore.js' type='text/javascript'></script>
     <!-- The Following is styles for different language  -->
     <script src='{{ ASSET_PATH }}/syntaxhighlighter_3.0.83/scripts/shBrushBash.js' type='text/javascript'></script>
