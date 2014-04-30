@@ -9,13 +9,14 @@ title: 线性表
 
 线性表啊线性表
 
-{% highlight c linenos %}
+{% highlight cpp linenos %}
     cout<<"Hello world!"<<endl;
     
-    
+    //COMMENT
     if(a<0){
         printf("Dont use pre!");
     }
+    //this is a very very very very very very very very very very very very very long line.
 {% endhighlight %}
 
 线性表啊
