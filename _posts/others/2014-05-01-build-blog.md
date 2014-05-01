@@ -83,8 +83,8 @@ class属性。定位这个pre标签自然是根据上面的input标签，我的j
 _includes\JB\analytics文件，仿照其格式添加：
 <input type="hidden" class="brush" value="brush:plain" />
 
-        \{\% when "cnzz" \%\}
-        \{\% include JB/analytics-providers/cnzz \%\}
+        {% when "cnzz" %}
+        {\% include JB/analytics-providers/cnzz %}
 在_config.yml添加站点配置site:&nbsp;true（注意冒号之后的空格），修改analytics provider为cnzz。
 
 [1]:https://github.com/plusjade/jekyll-bootstrap.git
