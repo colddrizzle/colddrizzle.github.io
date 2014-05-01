@@ -80,11 +80,11 @@
                 var node=$(t).next();//get PRE
                 var code=$(node).children("code")[0];//get CODE
                 $(code).attr("class",$(cur).attr("value"));//set class
+		SyntaxHighlighter.config.tagName="code";
+            	SyntaxHighlighter.defaults['toolbar']=false;
+            	SyntaxHighlighter.all();
+            	add_comment();
             });
-            SyntaxHighlighter.config.tagName="code";
-            SyntaxHighlighter.defaults['toolbar']=false;
-            SyntaxHighlighter.all();
-            add_comment();
         });
 
     </script>
