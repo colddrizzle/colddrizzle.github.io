@@ -34,13 +34,13 @@ https协议的地址可以在github仓库的页面找到,使用https协议可以
 ******************
 ###方法二的一些小技巧
 1. __快速更改主题__：[浏览选择主题][2],按照页面指示在本地仓库下执行rake命令。
-2. __添加评论__:在disqus上注册，上面最后会给出一段代码（universal code），将这段代码添加到`_includes\JB\comments-providers\disqus`中，并且做如下修改：
-    <input type="hidden" class="brush" value="brush:xml;highlight:[7,11]" />
+2. __添加评论__:在disqus上注册，添加站点，并要求提供shortname用来标识这个站点，上面最后会给出一段代码（universal code），将这段代码添加到`_includes\JB\comments-providers\disqus`中，并且做如下修改：
+    <input type="hidden" class="brush" value="brush:xml;highlight:[4,7,11]" />
     
         <div id="disqus_thread"></div>
         <script type="text/javascript">
             {% if site.safe == false %}var disqus_developer = 1;{% endif %}
-            var disqus_shortname = '{{ site.JB.comments.disqus.short_name }}'; // required: replace example with your forum shortname
+            var disqus_shortname = '{{ site.JB.comments.disqus.short_name }}'; // 注意将short_name改为自己的shortname。
             {% if page.wordpress_id %}var disqus_identifier = '{{page.wordpress_id}} {{site.production_url}}/?p={{page.wordpress_id}}';{% endif %}
             /* * * DON'T EDIT BELOW THIS LINE * * */
             function add_comment() { /*添加函数名*/
