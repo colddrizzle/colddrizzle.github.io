@@ -85,7 +85,7 @@ _includes\JB\analytics文件，仿照其格式添加：
 
         \{\% when "cnzz" \%\}
         \{\% include JB/analytics-providers/cnzz \%\}
-在_config.yml添加站点配置site:\ true（注意冒号之后的空格），修改analytics provider为cnzz。
+在_config.yml添加站点配置site:&nbsp;true（注意冒号之后的空格），修改analytics provider为cnzz。
 
 [1]:https://github.com/plusjade/jekyll-bootstrap.git
 [2]:http://www.jekyllbootstrap.com/usage/jekyll-theming.html
