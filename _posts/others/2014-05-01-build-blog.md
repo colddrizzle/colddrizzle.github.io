@@ -35,7 +35,7 @@ https协议的地址可以在github仓库的页面找到,使用https协议可以
 ###方法二的一些小技巧
 1. __快速更改主题__：[浏览选择主题][2],按照页面指示在本地仓库下执行rake命令。
 2. __添加评论__:在disqus上注册，上面最后会给出一段代码（universal code），将这段代码添加到_includes\JB\comments-providers\disqus中，并且做如下修改：
-    <input type="hidden" class="brush" value="brush:xml;highlight=[5,9]" />
+    <input type="hidden" class="brush" value="brush:xml;highlight:[5,9]" />
     
         <div id="disqus_thread"></div>
         <script type="text/javascript">
