@@ -72,11 +72,11 @@ class属性。定位这个pre标签自然是根据上面的input标签，我的j
                 var node=$(t).next();//get PRE
                 var code=$(node).children("code")[0];//get CODE
                 $(code).attr("class",$(cur).attr("value"));//set class
+                SyntaxHighlighter.config.tagName="code";
+                SyntaxHighlighter.defaults['toolbar']=false;
+                SyntaxHighlighter.all();
+                add_comment();
             });
-            SyntaxHighlighter.config.tagName="code";
-            SyntaxHighlighter.defaults['toolbar']=false;
-            SyntaxHighlighter.all();
-            add_comment();
         });
 可以看到add_comment()在页面完加载并且代码高亮渲染完之后调用，这样是避免访问disqus.com时网速过慢从而导致整个页面卡在这儿（顺便吐槽学校的破网速:<），从而导致jquery的ready方法无法执行，从而无法渲染代码。
 5. __添加站点统计__：我使用的是cnzz，首先是去cnzz注册并添加自己的站点，然后cnzz会给你一段js代码，将这段代码保存为cnzz文件并拷贝到`_includes\JB\analytics-providers\`目录下，修改
