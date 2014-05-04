@@ -7,8 +7,9 @@ title: 搭博小记
 ---
 {% include JB/setup %}
 
-使用github搭建博客一般有两种方法，其一是在任意一个仓库下用pages自动生成项目的gh-pages分支，作为博客，其二是建立名为
-username.github.io的仓库，github将把此仓库关联到域名http://username.github.io上。下面简单介绍两种方法。
+使用github搭建博客一般有两种方法，其一是在任意一个仓库下用pages自动生成项目的gh-pages分支，作为博客，本地只需要安装git工具，使用html写博客，但博客的好多东西都需要自己做，
+比如目录，Tag，页面样式等等，而且每次写博需要拷贝页眉页脚等等，其二是建立名为username.github.io的仓库，github将把此仓库关联到域名http://username.github.io上。本地需要安装git工具和
+搭建jekyll环境，windows上的搭建方法见[这儿][0]。下面简单介绍两种方法。
 ***************
 ###方法一
 1.github上注册账号username。  
@@ -88,5 +89,6 @@ _includes\JB\analytics文件，仿照其格式添加：
         { % include JB/analytics-providers/cnzz %}
 在_config.yml添加站点配置site:&nbsp;true（注意冒号之后的空格），修改analytics provider为cnzz。
 
+[0]:http://www.tuicool.com/articles/Fvayai
 [1]:https://github.com/plusjade/jekyll-bootstrap.git
 [2]:http://www.jekyllbootstrap.com/usage/jekyll-theming.html
