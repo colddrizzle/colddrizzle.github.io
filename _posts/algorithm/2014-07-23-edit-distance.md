@@ -40,15 +40,47 @@ A[1...4]和B[1...6]（删除），A[1...4]和B[1...5]（替换）,A[1..3]和B[1.
 综上所述，很容易给出编辑距离问题的递归式。
 ![递归式][1]
 
-初始化如下：
+初始化如下：   
 opt[i][0]=min(i*cost(delete),cost(kill)), 0<i<m   
 opt[0][j]=j*cost(insert), 0<j<n
 
 ##程序实现
 <input type="hidden" class="brush" value="brush:python;" />
     
-    def foo:()
-        pass
+    A="gabdeffff"
+    B="abde"
+    costs={'copy':1,
+           'replace':1,
+           'insert':1,
+           'delete':1,
+           'exchange':2,
+           'kill':3}
+    opt=[[0]*20 for i in range(20)]
+
+    #初始化
+    for i in range(1,len(A)+1):
+        opt[i][0]=min(i*costs['delete'],costs['kill'])
+    for j in range(1,len(B)+1):
+        opt[0][j]=j*costs['insert']
+
+    for i in range(1,len(A)+1):
+        for j in range(1,len(B)+1):
+            iA=i-1
+            jB=j-1
+            
+            exchange=float('inf')
+            if iA-1>=0 and jB-1>=0 and A[iA-1]==B[jB] and A[iA]==B[jB-1]:
+                exchange=opt[i-2][j-2]+costs['exchange']
+            copy=float('inf')
+            if A[iA]==B[jB]:
+                copy=opt[i-1][j-1]+costs['copy']
+            replace=opt[i-1][j-1]+costs['replace']
+            insert=opt[i][j-1]+costs['insert']
+            delete=opt[i-1][j]+costs['delete']
+            opt[i][j]=min(exchange,copy,replace,insert,delete)
+
+    min_cost=min(opt[len(A)][len(B)],min([opt[i][len(B)]+costs['kill'] for i in range(len(A))]))
+    print min_cost
 
 ##找出所有的最短编辑路径
 
