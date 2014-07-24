@@ -37,6 +37,7 @@ A[1...4]和B[1...6]（删除），A[1...4]和B[1...5]（替换）,A[1..3]和B[1.
 ####明确*状态*的含义
 ##递归定义
 综上所述，很容易给出编辑距离问题的递归式。
+![递归式][1]
 ##程序实现
 <input type="hidden" class="brush" value="brush:python;" />
     
@@ -46,3 +47,4 @@ A[1...4]和B[1...6]（删除），A[1...4]和B[1...5]（替换）,A[1..3]和B[1.
 ##找出所有的最短编辑路径
 
 [0]:http://iprai.hust.edu.cn/icl2002/algorithm/algorithm/technique/dynamic_programming/chapter3.htm
+[1]:../resources/2.png
