@@ -47,4 +47,4 @@ A[1...4]和B[1...6]（删除），A[1...4]和B[1...5]（替换）,A[1..3]和B[1.
 ##找出所有的最短编辑路径
 
 [0]:http://iprai.hust.edu.cn/icl2002/algorithm/algorithm/technique/dynamic_programming/chapter3.htm
-[1]:../resources/2.png
+[1]:/assets/resources/2.png
