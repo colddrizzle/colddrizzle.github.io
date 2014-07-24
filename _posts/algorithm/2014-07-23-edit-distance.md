@@ -41,8 +41,8 @@ A[1...4]和B[1...6]（删除），A[1...4]和B[1...5]（替换）,A[1..3]和B[1.
 ![递归式][1]
 
 初始化如下：   
-opt[i][0]=min(i*cost(delete),cost(kill)), 0<i<m   
-opt[0][j]=j*cost(insert), 0<j<n
+opt[i][0]=min(i·cost(delete),cost(kill)), 0<i<m   
+opt[0][j]=j·cost(insert), 0<j<n
 
 ##程序实现
 <input type="hidden" class="brush" value="brush:python;" />
