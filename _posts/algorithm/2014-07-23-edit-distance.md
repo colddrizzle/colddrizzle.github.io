@@ -90,10 +90,10 @@ opt[0][j]=j·cost(insert), 0<j<n
 
 ##找出所有的最短编辑路径
 ##推荐参考资料
-[动态规划 by starfish][2]
-[通过金矿模型介绍动态规划][3]
+*   [动态规划 by starfish][2]
+*   [通过金矿模型介绍动态规划][3]
 
 [0]:http://iprai.hust.edu.cn/icl2002/algorithm/algorithm/technique/dynamic_programming/chapter3.htm
 [1]:/assets/resources/2.png
-[2]:http://blog.csdn.net/woshioosm/article/details/7438834
+[2]:http://iprai.hust.edu.cn/icl2002/algorithm/algorithm/technique/dynamic_programming/index.htm
 [3]:http://www.cnblogs.com/sdjl/articles/1274312.html
