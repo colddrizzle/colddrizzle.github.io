@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Hello World!
+title: SHAPE OF MY HEART
 tagline: Supporting tagline
 ---
 {% include JB/setup %}
