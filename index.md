@@ -1,6 +1,7 @@
 ---
 layout: page
 title: 志不强者智不达
+tagline: Supporting tagline
 ---
 {% include JB/setup %}
 

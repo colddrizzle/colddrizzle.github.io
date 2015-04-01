@@ -65,7 +65,9 @@ Markdown的中文支持则是在`_config.yml`中配置`markdown:rdiscount`。rdi
 `<input type="hidden" class="brush" value="brush:cpp;first-line:10;highlight=[12,13]" />`   
 其中value值就是syntaxhighlighter的pre标签的class属性。
 然后空一行，按照markdown的语法格式正常的插入代码即可。这样markdown就会先将代码中的<，&自动转换为html实体，然后加上pre标签。我们需要做的就是用jquery为这个pre标签添加上
-class属性。定位这个pre标签自然是根据上面的input标签，我的js代码如下：  
+class属性。定位这个pre标签自然是根据上面的input标签，我的js代码如下：
+
+  
 <input type="hidden" class="brush" value="brush:jscript" />
 
         $(document).ready(function(){
