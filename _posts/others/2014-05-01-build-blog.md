@@ -65,10 +65,8 @@ Markdown的中文支持则是在`_config.yml`中配置`markdown:rdiscount`。rdi
 `<input type="hidden" class="brush" value="brush:cpp;first-line:10;highlight=[12,13]" />`   
 其中value值就是syntaxhighlighter的pre标签的class属性。
 然后空一行，按照markdown的语法格式正常的插入代码即可。这样markdown就会先将代码中的<，&自动转换为html实体，然后加上pre标签。我们需要做的就是用jquery为这个pre标签添加上
-class属性。定位这个pre标签自然是根据上面的input标签，我的js代码如下：
-
-  
-<input type="hidden" class="brush" value="brush:jscript" />
+class属性。定位这个pre标签自然是根据上面的input标签，我的js代码如下：  
+    <input type="hidden" class="brush" value="brush:jscript" />
 
         $(document).ready(function(){
             $("input.brush").each(function(i,cur){
@@ -85,7 +83,7 @@ class属性。定位这个pre标签自然是根据上面的input标签，我的j
 可以看到add_comment()在页面完加载并且代码高亮渲染完之后调用，这样是避免访问disqus.com时网速过慢从而导致整个页面卡在这儿（顺便吐槽学校的破网速:<），从而导致jquery的ready方法无法执行，从而无法渲染代码。
 5. __添加站点统计__：我使用的是cnzz，首先是去cnzz注册并添加自己的站点，然后cnzz会给你一段js代码，将这段代码保存为cnzz文件并拷贝到`_includes\JB\analytics-providers\`目录下，修改
 _includes\JB\analytics文件，仿照其格式添加：
-<input type="hidden" class="brush" value="brush:plain" />
+    <input type="hidden" class="brush" value="brush:plain" />
 
         { % when "cnzz" %}
         { % include JB/analytics-providers/cnzz %}
