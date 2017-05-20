@@ -1,4 +1,11 @@
-佛教的基本观念
+---
+layout: post
+category : 宗教
+tagline: "Supporting tagline"
+tags : [宗教, 佛教]
+title: 佛教的基本观念
+---
+{% include JB/setup %}
 
 　　（一）平等观： 
 　　 
