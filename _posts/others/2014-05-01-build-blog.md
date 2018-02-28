@@ -5,13 +5,16 @@ tagline: "Supporting tagline"
 tags : [jekyll, 语法高亮, github, blog]
 title: 搭博小记
 ---
+
 {% include JB/setup %}
 
 使用github搭建博客一般有两种方法，其一是在任意一个仓库下用pages自动生成项目的gh-pages分支，作为博客，本地只需要安装git工具，使用html写博客，但博客的好多东西都需要自己做，
 比如目录，Tag，页面样式等等，而且每次写博需要拷贝页眉页脚等等，其二是建立名为username.github.io的仓库，github将把此仓库关联到域名http://username.github.io上。本地需要安装git工具和
 搭建jekyll环境，windows上的搭建方法见[这儿][0]。下面简单介绍两种方法。
 ***************
+
 ###方法一
+
 1.github上注册账号username。  
 2.新建仓库responsity_name。  
 3.仓库Setting页面使用auto pages generator。每一个仓库都可以有一个pages。然后查看pages的setting页面就可以看到pages网址。  
@@ -26,6 +29,7 @@ https协议的地址可以在github仓库的页面找到,使用https协议可以
 11.使用`git push`推送到github.com。(push一般需要关联远程仓库，但是clone得到的仓库里的.git的config里的remote已经设置好了)   
 
 ###方法二
+
 1.新建仓库，命名为username.github.io，但是不生成pages。为行文方便，假设其git的https地址为url。  
 2. 从`git clone` [这儿][1]克隆jekyll-bootstrap模板到本地仓库。  
 3.修改git里confing的remote设置为上文的url。  
@@ -33,7 +37,9 @@ https协议的地址可以在github仓库的页面找到,使用https协议可以
 5.开始在本地修改样式，创建自己的博客吧。
 
 ******************
+
 ###方法二的一些小技巧
+
 1. __快速更改主题__：[浏览选择主题][2],按照页面指示在本地仓库下执行rake命令。
 2. __添加评论__:在disqus上注册，添加站点，并要求提供shortname用来标识这个站点，上面最后会给出一段代码（universal code），将这段代码添加到`_includes\JB\comments-providers\disqus`中，并且做如下修改：
     <input type="hidden" class="brush" value="brush:xml;highlight:[4,7,11]" />
