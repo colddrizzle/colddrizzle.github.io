@@ -8,10 +8,9 @@ title: 线性表
 {% include JB/setup %}
 
 线性表啊线性表
+
 <input type="hidden" class="brush" value="brush:cpp" />
-
-{% highlight cpp %}
-
+```
     /////////////////////////////////////////////////
     // One byte
     const int TB1Def::B1Bits=8;
@@ -219,8 +218,7 @@ title: 线性表
       for (int BitN=0; BitN<Bits; BitN++){printf("%d", GetBit(BitN));}
       //printf("\n");
     }
-
-{% endhighlight %}
+```
 
     
 线性表啊
