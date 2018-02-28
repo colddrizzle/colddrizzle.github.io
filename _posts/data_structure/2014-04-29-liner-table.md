@@ -10,7 +10,7 @@ title: 线性表
 线性表啊线性表
 <input type="hidden" class="brush" value="brush:cpp" />
 
-{% highlight ruby %}
+{% highlight cpp %}
 
     /////////////////////////////////////////////////
     // One byte
