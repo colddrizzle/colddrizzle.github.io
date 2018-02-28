@@ -8,6 +8,10 @@ title: 线性表
 {% include JB/setup %}
 
 线性表啊线性表
+    <code>
+       <html>
+       </body>
+    </code>
 
     <input type="hidden" class="brush" value="brush:cpp" />
 ```
