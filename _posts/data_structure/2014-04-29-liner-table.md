@@ -10,7 +10,6 @@ title: 线性表
 线性表啊线性表
 
 <pre class="brush: xml; highlight: [1]; html-script: true" >
-    <html>
     </body>
 </pre>
 
