@@ -54,8 +54,7 @@ opt[0][j]=j·cost(insert), 0<j<n
 
 ## 程序实现
 
-    <input type="hidden" class="brush" value="brush:python;" />
-```    
+<pre class="brush:python;">    
     A="gabdeffff"
     B="abde"
     costs={'copy':1,
@@ -90,7 +89,7 @@ opt[0][j]=j·cost(insert), 0<j<n
 
     min_cost=min(opt[len(A)][len(B)],min([opt[i][len(B)]+costs['kill'] for i in range(len(A))]))
     print min_cost
-```
+</pre>
 
 ## 找出所有的最短编辑路径
 递归或者用一个栈便可以遍历所有的路径，唯一的难处是若之前未能存储规划表中的每一格的后继，便需要重新计算：

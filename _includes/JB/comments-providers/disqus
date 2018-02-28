@@ -22,7 +22,7 @@
              add_comment();
          });
      });
-    */
+*/    
              SyntaxHighlighter.config.tagName="pre";
              SyntaxHighlighter.defaults['toolbar']=false;
              SyntaxHighlighter.all();

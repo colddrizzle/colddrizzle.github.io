@@ -42,8 +42,7 @@ https协议的地址可以在github仓库的页面找到,使用https协议可以
 
 1. __快速更改主题__：[浏览选择主题][2],按照页面指示在本地仓库下执行rake命令。
 2. __添加评论__:在disqus上注册，添加站点，并要求提供shortname用来标识这个站点，上面最后会给出一段代码（universal code），将这段代码添加到`_includes\JB\comments-providers\disqus`中，并且做如下修改：
-    <input type="hidden" class="brush" value="brush:xml;highlight:[4,7,11]" />
-```    
+<pre class="brush:xml;">
         <div id="disqus_thread"></div>
         <script type="text/javascript">
             {% if site.safe == false %}var disqus_developer = 1;{% endif %}
@@ -58,7 +57,7 @@ https协议的地址可以在github仓库的页面找到,使用https协议可以
         </script>
         <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
         <a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
-```
+</pre>
 这样修改的目的将在下文说明。
 然后修改`_config.yml`的comment provider为disqus，short_name设置为在disqus上添加站点时设置的shortname，以后可以从disqus上集中看自己的评论，删除评论。
 可以在Disqus的站点下设置允许接收匿名评论（即作为guest访问），在Disqus账户中设置不接收Disqus摘要以去掉广告:)
@@ -73,8 +72,8 @@ Markdown的中文支持则是在`_config.yml`中配置`markdown:rdiscount`。rdi
 其中value值就是syntaxhighlighter的pre标签的class属性。
 然后空一行，按照markdown的语法格式正常的插入代码即可。这样markdown就会先将代码中的<，&自动转换为html实体，然后加上pre标签。我们需要做的就是用jquery为这个pre标签添加上
 class属性。定位这个pre标签自然是根据上面的input标签，我的js代码如下：  
-    <input type="hidden" class="brush" value="brush:jscript" />
-```
+
+<pre class="brush:jscript;">
         $(document).ready(function(){
             $("input.brush").each(function(i,cur){
                 var t=$(cur).parent();//get P
@@ -87,16 +86,16 @@ class属性。定位这个pre标签自然是根据上面的input标签，我的j
                 add_comment();
             });
         });
-```
+</pre>
 
 可以看到add_comment()在页面完加载并且代码高亮渲染完之后调用，这样是避免访问disqus.com时网速过慢从而导致整个页面卡在这儿（顺便吐槽学校的破网速:<），从而导致jquery的ready方法无法执行，从而无法渲染代码。
 5. __添加站点统计__：我使用的是cnzz，首先是去cnzz注册并添加自己的站点，然后cnzz会给你一段js代码，将这段代码保存为cnzz文件并拷贝到`_includes\JB\analytics-providers\`目录下，修改
 _includes\JB\analytics文件，仿照其格式添加：
-    <input type="hidden" class="brush" value="brush:plain" />
 
+<pre>
         { % when "cnzz" %}
         { % include JB/analytics-providers/cnzz %}
-
+</pre>
 在_config.yml添加站点配置site:&nbsp;true（注意冒号之后的空格），修改analytics provider为cnzz。
 
 [0]:http://www.tuicool.com/articles/Fvayai
