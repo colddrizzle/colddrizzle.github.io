@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head profile="http://www.w3.org/2005/10/profile">
+  <head>
     <meta charset="utf-8">
     <title>{{ page.title }}</title>
     {% if page.description %}<meta name="description" content="{{ page.description }}">{% endif %}
@@ -14,20 +14,14 @@
     <!-- Le styles -->
     <link href="{{ ASSET_PATH }}/css/1.4.0/bootstrap.css" rel="stylesheet">
     <link href="{{ ASSET_PATH }}/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
-    
-     <!--SyntaxHighlighter -->
-    <link href='{{ ASSET_PATH }}/syntaxhighlighter_3.0.83/styles/shCore.css' rel='stylesheet' type='text/css'/>
-    <link href='{{ ASSET_PATH }}/syntaxhighlighter_3.0.83/styles/shThemeDefault.css' rel='stylesheet' type='text/css'/>
 
     <!-- Le fav and touch icons -->
-  <!-- Update these with your own images-->
-    <link rel="shortcut icon" href="favicon.png" type="image/png"/>
-  <!--
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
     <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
     <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
     <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
   -->
-    <script src='{{ ASSET_PATH }}/jquery-1.11.0.min.js' type='text/javascript'></script>
   </head>
 
   <body>
@@ -62,30 +56,4 @@
 
     {% include JB/analytics %}
   </body>
-    <script src='{{ ASSET_PATH }}/syntaxhighlighter_3.0.83/scripts/shCore.js' type='text/javascript'></script>
-    <!-- The Following is styles for different language  -->
-    <script src='{{ ASSET_PATH }}/syntaxhighlighter_3.0.83/scripts/shBrushBash.js' type='text/javascript'></script>
-    <script src='{{ ASSET_PATH }}/syntaxhighlighter_3.0.83/scripts/shBrushCpp.js' type='text/javascript'></script>
-    <script src='{{ ASSET_PATH }}/syntaxhighlighter_3.0.83/scripts/shBrushCss.js' type='text/javascript'></script>
-    <script src='{{ ASSET_PATH }}/syntaxhighlighter_3.0.83/scripts/shBrushJava.js' type='text/javascript'></script>
-    <script src='{{ ASSET_PATH }}/syntaxhighlighter_3.0.83/scripts/shBrushJScript.js' type='text/javascript'></script>
-    <script src='{{ ASSET_PATH }}/syntaxhighlighter_3.0.83/scripts/shBrushPython.js' type='text/javascript'></script>
-    <script src='{{ ASSET_PATH }}/syntaxhighlighter_3.0.83/scripts/shBrushSql.js' type='text/javascript'></script>
-    <script src='{{ ASSET_PATH }}/syntaxhighlighter_3.0.83/scripts/shBrushXml.js' type='text/javascript'></script>
-    <script src='{{ ASSET_PATH }}/syntaxhighlighter_3.0.83/scripts/shBrushPlain.js' type='text/javascript'></script>
-    <script language='javascript'>
-        $(document).ready(function(){
-            $("input.brush").each(function(i,cur){
-                var t=$(cur).parent();//get P
-                var node=$(t).next();//get PRE
-                var code=$(node).children("code")[0];//get CODE
-                $(code).attr("class",$(cur).attr("value"));//set class
-		SyntaxHighlighter.config.tagName="code";
-            	SyntaxHighlighter.defaults['toolbar']=false;
-            	SyntaxHighlighter.all();
-            	add_comment();
-            });
-        });
-
-    </script>
 </html>

@@ -44,7 +44,7 @@ a{color:#0069d6;text-decoration:none;line-height:inherit;font-weight:inherit;}a:
 .span7{width:400px;}
 .span8{width:460px;}
 .span9{width:520px;}
-.span10{width:780px;}
+.span10{width:580px;}
 .span11{width:640px;}
 .span12{width:700px;}
 .span13{width:760px;}
@@ -101,8 +101,8 @@ blockquote{margin-bottom:18px;border-left:5px solid #eee;padding-left:15px;}bloc
 blockquote small{display:block;font-size:12px;font-weight:300;line-height:18px;color:#bfbfbf;}blockquote small:before{content:'\2014 \00A0';}
 address{display:block;line-height:18px;margin-bottom:18px;}
 code,pre{padding:0 3px 2px;font-family:Monaco, Andale Mono, Courier New, monospace;font-size:12px;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;}
-code{background;transparent;color: #cccccc;background-color:#222222;padding:1px 3px;}
-pre{background-color:#ffffff;color:white;display:block;padding:8.5px;margin:0 0 18px;line-height:18px;font-size:12px;border:1px solid #ccc;border:1px solid rgba(0, 0, 0, 0.15);-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;white-space:pre;white-space:pre-wrap;word-wrap:break-word;}
+code{background-color:#fee9cc;color:rgba(0, 0, 0, 0.75);padding:1px 3px;}
+pre{background-color:#f5f5f5;display:block;padding:8.5px;margin:0 0 18px;line-height:18px;font-size:12px;border:1px solid #ccc;border:1px solid rgba(0, 0, 0, 0.15);-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;white-space:pre;white-space:pre-wrap;word-wrap:break-word;}
 form{margin-bottom:18px;}
 fieldset{margin-bottom:18px;padding-top:18px;}fieldset legend{display:block;padding-left:150px;font-size:19.5px;line-height:1;color:#404040;*padding:0 0 5px 145px;*line-height:1.5;}
 form .clearfix{margin-bottom:18px;zoom:1;}form .clearfix:before,form .clearfix:after{display:table;content:"";zoom:1;}
@@ -240,7 +240,7 @@ table .headerSortUp.purple,table .headerSortDown.purple{background-color:#e2d5f0
 .topbar input:hover{background-color:#bfbfbf;background-color:rgba(255, 255, 255, 0.5);color:#ffffff;}
 .topbar input:focus,.topbar input.focused{outline:0;background-color:#ffffff;color:#404040;text-shadow:0 1px 0 #ffffff;border:0;padding:5px 10px;-webkit-box-shadow:0 0 3px rgba(0, 0, 0, 0.15);-moz-box-shadow:0 0 3px rgba(0, 0, 0, 0.15);box-shadow:0 0 3px rgba(0, 0, 0, 0.15);}
 .topbar-inner,.topbar .fill{background-color:#222;background-color:#222222;background-repeat:repeat-x;background-image:-khtml-gradient(linear, left top, left bottom, from(#333333), to(#222222));background-image:-moz-linear-gradient(top, #333333, #222222);background-image:-ms-linear-gradient(top, #333333, #222222);background-image:-webkit-gradient(linear, left top, left bottom, color-stop(0%, #333333), color-stop(100%, #222222));background-image:-webkit-linear-gradient(top, #333333, #222222);background-image:-o-linear-gradient(top, #333333, #222222);background-image:linear-gradient(top, #333333, #222222);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#333333', endColorstr='#222222', GradientType=0);-webkit-box-shadow:0 1px 3px rgba(0, 0, 0, 0.25),inset 0 -1px 0 rgba(0, 0, 0, 0.1);-moz-box-shadow:0 1px 3px rgba(0, 0, 0, 0.25),inset 0 -1px 0 rgba(0, 0, 0, 0.1);box-shadow:0 1px 3px rgba(0, 0, 0, 0.25),inset 0 -1px 0 rgba(0, 0, 0, 0.1);}
-.topbar div>ul,.nav{display:block;float:right;margin:0 10px 0 0;position:relative;left:0;}.topbar div>ul>li,.nav>li{display:block;float:left;}
+.topbar div>ul,.nav{display:block;float:left;margin:0 10px 0 0;position:relative;left:0;}.topbar div>ul>li,.nav>li{display:block;float:left;}
 .topbar div>ul a,.nav a{display:block;float:none;padding:10px 10px 11px;line-height:19px;text-decoration:none;}.topbar div>ul a:hover,.nav a:hover{color:#ffffff;text-decoration:none;}
 .topbar div>ul .active>a,.nav .active>a{background-color:#222;background-color:rgba(0, 0, 0, 0.5);}
 .topbar div>ul.secondary-nav,.nav.secondary-nav{float:right;margin-left:10px;margin-right:0;}.topbar div>ul.secondary-nav .menu-dropdown,.nav.secondary-nav .menu-dropdown,.topbar div>ul.secondary-nav .dropdown-menu,.nav.secondary-nav .dropdown-menu{right:0;border:0;}
