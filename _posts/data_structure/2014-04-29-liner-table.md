@@ -13,8 +13,7 @@ title: 线性表
     </body>
 </pre>
 
-    <input type="hidden" class="brush" value="brush:cpp" />
-```
+<pre class="brush:cpp;">
     /////////////////////////////////////////////////
     // One byte
     const int TB1Def::B1Bits=8;
@@ -222,7 +221,7 @@ title: 线性表
       for (int BitN=0; BitN<Bits; BitN++){printf("%d", GetBit(BitN));}
       //printf("\n");
     }
-```
+</pre>
 
     
 线性表啊
