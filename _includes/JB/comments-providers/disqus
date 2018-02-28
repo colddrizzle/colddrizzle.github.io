@@ -12,9 +12,9 @@
 
 $(document).ready(function(){
          $("input.brush").each(function(i,cur){
-             var t=$(cur).parent();//get P
-             var node=$(t).next();//get PRE
-             var code=$(node).children("code")[0];//get CODE
+             var t=$(cur);//get INPUT
+             var node=$(t).next();//get DIV
+             var code=$(node).find("code")[0];//get CODE
              $(code).attr("class",$(cur).attr("value"));//set class
              SyntaxHighlighter.config.tagName="code";
              SyntaxHighlighter.defaults['toolbar']=false;

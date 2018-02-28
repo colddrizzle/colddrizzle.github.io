@@ -43,7 +43,7 @@ https协议的地址可以在github仓库的页面找到,使用https协议可以
 1. __快速更改主题__：[浏览选择主题][2],按照页面指示在本地仓库下执行rake命令。
 2. __添加评论__:在disqus上注册，添加站点，并要求提供shortname用来标识这个站点，上面最后会给出一段代码（universal code），将这段代码添加到`_includes\JB\comments-providers\disqus`中，并且做如下修改：
     <input type="hidden" class="brush" value="brush:xml;highlight:[4,7,11]" />
-    
+```    
         <div id="disqus_thread"></div>
         <script type="text/javascript">
             {% if site.safe == false %}var disqus_developer = 1;{% endif %}
@@ -58,7 +58,7 @@ https协议的地址可以在github仓库的页面找到,使用https协议可以
         </script>
         <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
         <a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
-
+```
 这样修改的目的将在下文说明。
 然后修改`_config.yml`的comment provider为disqus，short_name设置为在disqus上添加站点时设置的shortname，以后可以从disqus上集中看自己的评论，删除评论。
 可以在Disqus的站点下设置允许接收匿名评论（即作为guest访问），在Disqus账户中设置不接收Disqus摘要以去掉广告:)
