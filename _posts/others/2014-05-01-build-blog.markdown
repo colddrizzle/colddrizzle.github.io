@@ -13,7 +13,7 @@ title: 搭博小记
 搭建jekyll环境，windows上的搭建方法见[这儿][0]。下面简单介绍两种方法。
 ***************
 
-###方法一
+### 方法一
 
 1.github上注册账号username。  
 2.新建仓库responsity_name。  
@@ -28,7 +28,7 @@ https协议的地址可以在github仓库的页面找到,使用https协议可以
 10.使用`git commit –m”messages”`提交到本地。  
 11.使用`git push`推送到github.com。(push一般需要关联远程仓库，但是clone得到的仓库里的.git的config里的remote已经设置好了)   
 
-###方法二
+### 方法二
 
 1.新建仓库，命名为username.github.io，但是不生成pages。为行文方便，假设其git的https地址为url。  
 2. 从`git clone` [这儿][1]克隆jekyll-bootstrap模板到本地仓库。  
@@ -38,7 +38,7 @@ https协议的地址可以在github仓库的页面找到,使用https协议可以
 
 ******************
 
-###方法二的一些小技巧
+### 方法二的一些小技巧
 
 1. __快速更改主题__：[浏览选择主题][2],按照页面指示在本地仓库下执行rake命令。
 2. __添加评论__:在disqus上注册，添加站点，并要求提供shortname用来标识这个站点，上面最后会给出一段代码（universal code），将这段代码添加到`_includes\JB\comments-providers\disqus`中，并且做如下修改：
