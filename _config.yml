@@ -6,7 +6,7 @@ exclude: [".rvmrc", ".rbenv-version", "README.md", "Rakefile", "changelog.md"]
 markdown_ext: "markdown,mkdown,mkdn,mkd,md"
 #markdown: rdiscount
 markdown: kramdown
-highlighter: false
+highlighter: rouge
 #pygments: true
 encoding: utf-8
 safe: true
