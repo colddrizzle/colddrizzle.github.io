@@ -9,7 +9,9 @@ title: 从编辑距离问题谈动态规划
 
 编辑距离是一个非常有实际意义的问题，常见的实际应用有搜索引擎中中输入提示的实现，生物科学中比较两段DNA的相近程度。
 本题题干采用《算法导论》动态规划章节的课后习题-编辑距离，不再赘述。
+
 ***************
+
 ## 为何可采用动态规划？
 动态规划的适用条件有其一般的说法，具体见[这儿][0],在此我试着换一种说法来表述其适用条件。
 #### 问题具有同构子问题
@@ -52,7 +54,7 @@ opt[0][j]=j·cost(insert), 0<j<n
 
 ## 程序实现
 
-<input type="hidden" class="brush" value="brush:python;" />
+    <input type="hidden" class="brush" value="brush:python;" />
 ```    
     A="gabdeffff"
     B="abde"

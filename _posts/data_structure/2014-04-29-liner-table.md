@@ -9,7 +9,7 @@ title: 线性表
 
 线性表啊线性表
 
-<input type="hidden" class="brush" value="brush:cpp" />
+    <input type="hidden" class="brush" value="brush:cpp" />
 ```
     /////////////////////////////////////////////////
     // One byte
