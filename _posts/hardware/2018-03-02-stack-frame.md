@@ -30,7 +30,9 @@ title : C语言下栈帧结构与函数调用过程
 再一个，被调用函数运算过程中还可能继续进行函数调用，于是上述三个位置需要多对，但是呢同一时刻只有一个函数调用结果等待交付，因此结果的存放位置可以复用，而其他的要可扩展，于是自然想到用**一块连续的内存**来依次存储：
 
 <div align=center>
+
 ![链表][0]
+
 </div>
 
 可以看到每一个函数对应一组数据<断点位置，参数>，姑且称之为**一帧数据**好了。
@@ -38,7 +40,9 @@ title : C语言下栈帧结构与函数调用过程
 假设我们的机器数据总线与地址总线都是32位，那么断点地址占用4个字节，参数类型包括整型、浮点数和指针，那么一个参数也占用4个字节，CPU的当前指令位置用PC表示，并且连续内存的存储从高地址向低地址扩展，并用指针LP表示最后**一帧数据**的结束地址，那么我们模拟一下函数调用过程：
 
 <div align=center>
+
 ![链表][1]
+
 </div>
 
 1. LAST_LP <- LP      保存LP的初始值 也就是调用者那一帧的结束地址 
@@ -59,7 +63,9 @@ title : C语言下栈帧结构与函数调用过程
 于是我们的存储结构变成了：
 
 <div align=center>
+
 ![链表][2]
+
 </div>
 
 1. LAST_LP <- LP
@@ -75,6 +81,12 @@ title : C语言下栈帧结构与函数调用过程
 10. PC <- LAST_PC 跳转到调用者断点处继续执行
 11. 从约定寄存器中取出结果 
 
+
+接下来继续根据文章完善本文，然后用小程序和gdb验证
+https://eli.thegreenplace.net/2011/09/06/stack-frame-layout-on-x86-64/
+http://eleveneat.com/2015/07/11/Stack-Frame/
+http://www.unixwiz.net/techtips/win32-callconv-asm.html
+https://www.cnblogs.com/bangerlee/archive/2012/05/22/2508772.html
 
 
 [0]:/assets/resources/stack_frame_1.png
