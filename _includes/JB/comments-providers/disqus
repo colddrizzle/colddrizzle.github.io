@@ -26,7 +26,7 @@
              SyntaxHighlighter.config.tagName="pre";
              SyntaxHighlighter.defaults['toolbar']=false;
              SyntaxHighlighter.all();
-             add_comment();
+            /* add_comment();*/
 
 </script>
 <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
