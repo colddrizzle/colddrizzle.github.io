@@ -69,6 +69,7 @@ title : C语言下栈帧结构与函数调用过程
 接下来继续根据文章完善本文，然后用小程序和gdb验证
 
 注意说明一个小点，编译器优先使用寄存器传参数，寄存器装不下才会使用栈
+以及是在帧指针指向帧顶的情况下是如何确定参数界限的
 
 https://eli.thegreenplace.net/2011/09/06/stack-frame-layout-on-x86-64/
 http://eleveneat.com/2015/07/11/Stack-Frame/
