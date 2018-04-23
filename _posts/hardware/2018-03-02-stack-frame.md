@@ -72,11 +72,17 @@ title : C语言下栈帧结构与函数调用过程
 以及是在帧指针指向帧顶的情况下是如何确定参数界限的
 
 https://eli.thegreenplace.net/2011/09/06/stack-frame-layout-on-x86-64/
-http://eleveneat.com/2015/07/11/Stack-Frame/
+主要讲了x86-64下的栈帧结构，与x86基本相同。提到了AMD64 ABI定义的red zone--一种叶子函数的优化。另外提到了rbp寄存器对于编译器来讲，其实不需要，编译器可以根据rsp来推算。
+
 http://www.unixwiz.net/techtips/win32-callconv-asm.html
+从函数调用规范(function-call conventions)方面来看栈,其中提到`__cdecl`与`__stdcall`两种的区别，前者可传可变长的参数，由调用者来释放参数内存，后者不能，因此可以有被调用者来
+释放参数内存。理论上讲，可变长参数下，调用者和被调用者同时编译的情况下，编译器知道传入了几个参数，因此释放内存的代码放在被调用者下似乎也没什么问题，但要想到函数可以被多处调用，可变长的情况下除非被调用者知道有几个参数，否则被调用者不能清理，因为函数编译的时候，它的调用者还是未知的。另外，参数由被调用者释放真的合理吗，如果是引用传参显然是会出现问题的。
+
 https://www.cnblogs.com/bangerlee/archive/2012/05/22/2508772.html
+结合gdb实际验证了函数调用栈的结构。
+
 https://en.wikipedia.org/wiki/Call_stack
-http://www.cs.uwm.edu/classes/cs315/Bacon/Lecture/HTML/ch10s07.html
+
 
 [0]:/assets/resources/stack_frame_1.png
 [1]:/assets/resources/stack_frame_2.png
