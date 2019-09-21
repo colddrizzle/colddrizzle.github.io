@@ -25,26 +25,24 @@ python是一种"Everything is object"的语言，c语言是一种面向过程的
 有了上面一些思考预热，我们对于接下来要做的事情、要探求的问题就有了基本方向。
 
 ## 搭建cpython调试环境
-详细的过程参见[官方文档][1]。这里只说搭建过程中遇到的一些坑。本人使用的源码版本是2.7。本来打算在自己的mac上编译，我们知道mac上那套原生的c系语言编译系统是llvm\\clang那一套，官方也提供了使用clang编译的[支持](2)。然而由于我的mac osx系统版本是10.14比较新，mac在之前版本中抛弃了X11的支持，编译古老的python2.7的源码会被告知缺少Xlib.h头文件，google一番发现cpython邮件列表里有相同的问题被提出来，然而已经有大约5、6年没处理了，鉴于mac系统自成风格颇有古怪，于是放弃。转而在linux系统下构建，使用vscode加gdb的方式来调试，编译没有问题，然而vscode对于断点调试支持貌似有bug（毕竟vscode还是一个年轻的主要面向js开发的项目）。当然一边在命令行下使用gdb调试一边用vscode翻阅代码不是问题，但是来回切换窗口总是不方便，而且命令行下管理断点也是麻烦。于是又放弃。最终在window7系统下编译调试成功。
+详细的过程参见[官方文档][1]。这里只说搭建过程中遇到的一些坑。本人使用的源码版本是2.7。本来打算在自己的mac上编译，我们知道mac上那套原生的c系语言编译系统是llvm\\clang那一套，官方也提供了使用clang编译的[支持][2]。然而由于我的mac osx系统版本是10.14比较新，mac在之前版本中抛弃了X11的支持，编译古老的python2.7的源码会被告知缺少Xlib.h头文件，google一番发现cpython邮件列表里有相同的问题被提出来，然而已经有大约5、6年没处理了，鉴于mac系统自成风格颇有古怪，于是放弃。转而在linux系统下构建，使用vscode加gdb的方式来调试，编译没有问题，然而vscode对于断点调试支持貌似有bug（毕竟vscode还是一个年轻的主要面向js开发的项目）。当然一边在命令行下使用gdb调试一边用vscode翻阅代码不是问题，但是来回切换窗口总是不方便，而且命令行下管理断点也是麻烦。于是又放弃。最终在window7系统下编译调试成功。
 
 ## 初步了解cpython源码结构
-参考[官方文档](3)
+参考[官方文档][3]
 ## 当然是从对象开始
-既然python语言中一切都是对象，python语言的这一哲学观有许多奇妙之处，建议在继续了解cpython之前先看这篇[有关python世界观的文章](4)，那么我们自然关心没有对象概念的c语言如何实现这一点，
-而python语言中的很多内建对象又是python语言的基础，从对象入手很容易理解。这里我们避开闹人的语法分析处理与opcode这些太过于无关python语言层面的东西，有机会再展开这部分。
+既然python语言中一切都是对象，python语言的这一哲学观有许多奇妙之处，建议在继续了解cpython之前先看这篇[有关python世界观的文章][4]，那么我们自然关心没有对象概念的c语言如何实现这一点，
+而python语言中的很多内建对象又是python语言的基础，从对象入手很容易理解。这里我们避开语法分析处理与opcode这些太过于无关python语言层面的东西，有机会再展开这部分。
 
 在cpython中实际上是使用结构体来描述一个对象的。
-首先cpython中定义了一个结构体叫做[PyObject](5)，这个结构体很简单，将所有的PyObject组织成为一个双向链表，并且有一个字段tp_type指明这个Object的类型。之后定义的所有PyXXXObject结构体开头都与这个PyObject结构体相同，c语言里一个指针的解释取决于这个指针的类型，因此这里使用的c语言中常见的结构体嵌套那套把戏，linux源码也有这样的技巧。这种结构体嵌套就像类的继承。之后所有PyXXXObject指针都可以声明成PyObject的指针，只要在必要的上下文中转换为其真正的类型，注意PyObject的tp_type字段存储了这个指针的真正类型，从而保证了类型检查。
+首先cpython中定义了一个结构体叫做[PyObject][5]，这个结构体很简单，将所有的PyObject组织成为一个双向链表，并且有一个字段tp_type指明这个Object的类型。之后定义的所有PyXXXObject结构体开头都与这个PyObject结构体相同，c语言里一个指针的解释取决于这个指针的类型，因此这里使用的是c语言中常见的结构体嵌套那套把戏，linux源码也有这样的技巧，值得注意的是这种结构体嵌套本身就像类的继承。之后所有PyXXXObject指针都可以声明成PyObject的指针，只要在必要的上下文中转换为其真正的类型，注意PyObject的tp_type字段存储了这个指针的真正类型，从而保证了类型检查。
 
-定义了PyObject之后，cpython随后定义一个非常重要的结构体:[PyTypeObject](6)。之后python层面的所有类型都是这个结构体的一个实例。python中最基础的type是其实例，
-最基础的object也是其实例，用户定义的一个新式类经过解释器解释之后也会生成这个结构体的一个实例，int类型、long类型、甚至隐藏的function类型都是其实例。很容易在相应的XXXobject.c文件中找到这个实例的定义，并且很容易通过__doc__字段来验证这一点。
+定义了PyObject之后，cpython随后定义一个非常重要的结构体:[PyTypeObject][6]。之后python层面的所有类型都是这个结构体的一个实例。python中最基础的type是其实例，
+最基础的object也是其实例，用户定义的一个新式类经过解释器解释之后也会生成这个结构体的一个实例，int类型、long类型、python语言层面隐藏的function类型都是其实例。很容易在相应的XXXobject.c文件中找到这个实例的定义，并且很容易通过__doc__字段来验证这一点。
 
-比如type类型对应[PyType_Type](7), object类型对应的[PyBaseObject_Type](8), 用户自定义function类型对应的[PyFunction_Type](9)。
+比如type类型对应[PyType_Type][7], object类型对应的[PyBaseObject_Type][8], 用户自定义function类型对应的[PyFunction_Type][9]。
 
-![img](../../assets/resources/cpython_before_1.png)
+![img](/assets/resources/cpython_before_1.png){:width="100%"}
 
-PyTypeReady()？？？
-与cpython下python层面类与实例概念看起来的样子一个图说明？？
 
 有了以上的基础理解，阅读cpython代码便略有眉目了。
 
@@ -54,7 +52,7 @@ PyTypeReady()？？？
 [1]:https://devguide.python.org/
 [2]:https://devguide.python.org/clang/
 [3]:https://devguide.python.org/exploring/
-[4]:https://python世界之哲学观
+[4]:/2019/07/02/the-object-model-in-python
 [5]:https://github.com/python/cpython/blob/2.7/Include/object.h#L106
 [6]:https://github.com/python/cpython/blob/2.7/Include/object.h#L376
 [7]:https://github.com/python/cpython/blob/2.7/Objects/typeobject.c#L2879
