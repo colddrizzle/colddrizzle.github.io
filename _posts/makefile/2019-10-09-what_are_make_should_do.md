@@ -1,4 +1,15 @@
---略谈gnu makefile--
+---
+layout: post
+category : makefile
+tagline: "Supporting tagline"
+tags : [gun, make]
+title : make工具应该做什么
+---
+
+{% include JB/setup %}
+
+* toc
+{:toc}
 
 ucos_on_mac 项目的小小的makefile就引出了一堆问题，促使我思考为什么make这么难用，make本身应该做什么，gnu make的最佳实践是什么，以及理想的make工具应该是什么样。
 
