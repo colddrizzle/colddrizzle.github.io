@@ -7,3 +7,24 @@ The Implementation of Reliable Distributed Multiprocess Systems 为第2.
 提出paxos的算法的为第3.
 
 一切都在lamport的网站上。
+
+
+
+
+
+-------------------------
+关于共享内存的分布式论文有一个目录：A Comprehensive Bibliography of Distributed Shared Memory
+其中列出了非常多的论文，可以作为参考。
+
+
+--------------------------
+
+另外这部分内容应该偏向于应用，而不仅仅是学术方面。
+https://www.imooc.com/article/286118  这里提供了一点入门。
+
+
+
+
+这篇博客涉及到的问题
+https://blog.csdn.net/iteye_16474/article/details/82726634
+https://blog.csdn.net/yaotai8135/article/details/83050138

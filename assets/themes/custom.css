@@ -4,3 +4,7 @@ hr{
 
 	border: 1px dashed #000000;
 }
+
+code{
+	line-height: 2em;
+}
