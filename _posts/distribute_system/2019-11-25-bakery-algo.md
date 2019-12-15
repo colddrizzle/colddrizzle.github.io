@@ -1,6 +1,20 @@
-Lamport论文“A New Solution of Dijkstra’s Concurrent Programming Problem”
+---
+layout: post
+title: 面包房算法的分析理解
+description: ""
+category: 分布式
+tags: [分布式]
+---
+{% include JB/setup %}
 
-在这篇论文中，Lamport给出了一个多进程互斥算法，lamport本人非常看重这个算法，这是一个神奇的算法，它甚至不要求读写操作的原子性，也不关心读操作返回的任何值，lamport在http://lamport.azurewebsites.net/pubs/pubs.html#bakery 上说其之后的不少成果根源于此，甚至说关羽并发的一切都是来自研究该算法。
+* toc
+{:toc}
+
+<hr/>
+
+本文翻译自Lamport论文[“A New Solution of Dijkstra’s Concurrent Programming Problem”][0]
+
+在这篇论文中，Lamport给出了一个多进程互斥算法，lamport本人非常看重这个算法，这是一个神奇的算法，它甚至不要求读写操作的原子性，也不关心读操作返回的任何值，lamport在其[网站][0]上甚至说之后的不少成果根源于此，甚至说关于并发的一切都是来自研究该算法。
 
 ## 部分翻译
 
@@ -10,21 +24,24 @@ Lamport论文“A New Solution of Dijkstra’s Concurrent Programming Problem”
 integer array choosing[1:N], number[1:N]
 ```
 
-choosing[i]与number[i]在进程i的内存中比被初始化为0.
+choosing[i]与number[i]存储在进程i的内存中并被初始化为0.
 number[i]的值的范围是无界的，稍后再讨论这一点。
 
-下面是进程i的程序。执行必须从非临界段开始。maximum函数的参数可以任何顺序参与运算。整数对的“less than关系”定义为(a,b) < c, d当a< c或者a = c但b < d的时候。
+下面是进程i的程序。执行必须从非临界段开始。maximum函数的参数可以任何顺序参与运算。整数对的“less than关系”定义为(a,b) < (c, d)成立，当a < c或者a = c但b < d的时候。
 
 ```
 //something before
 
 begin integer j;
+
 	L1: choosing[i] := 1
 		number[i] := 1 + maximum(number[1], ..., number[N]);
 		choosing[i] := 1
 		for j = 1 step 1 until N do
+
 			begin
 				L2: if choosing[j] != 0 then goto L2;
+
 				L3: if number[j] != 0 and (number[j], j) < (number[i], i) then goto L3;
 			end;
 		critical section;
@@ -36,7 +53,7 @@ end
 //something after
 ```
 
-我们允许进程i在任意时刻失败,然后在非临界区重启（同时choosing[i] = number[i] = 0）. 然而，如果一个进程一直失败重启，那么真个系统会死锁。
+我们允许进程i在任意时刻失败,然后在非临界区重启（同时choosing[i] = number[i] = 0）. 然而，如果一个进程一直失败重启，那么整个系统会死锁。
 
 ## Proof of Correctness
 
@@ -44,6 +61,8 @@ end
 注意，该断言没有做读写重叠的任何假设（读写操作可以是非原子的）。
 
 断言1. 如果进程i与k都在面包房之内，并且i进入面包房的时间早于k进入门口的时间，那么有number[i] < number[k].
+
+断言1的正确性是显而易见的。
 
 > 什么叫早于？虽然此处可以以“绝对时间”或者统一时钟周期来理解，但都包含假设的意味，因此我们理解为在内存上开来，进程i的choosing[i]变为0先于进程j的choosing[j]变为1.
 
@@ -81,4 +100,29 @@ $$t_{L2} < t_{L3}$$。当进程k选择number[k]的当前值的时候，令$$t_{e
 如果在面包房里总是至少有一个进程，
 
 
-断言1是显而易见的。
+## 思考
+
+算法中用choosing标记进程进行选号的过程。当前进程选号结束后其choosing必定为0且number大于0. 因此L2循环最多循环到i必定结束，L3循环也是至多循环到i必定结束。L2循环目的就是判断是否有比自己的进程号小的进程没有进行选号，这意味有比自己进程号小的进程可能处于面包房内，也可能不在该算法的执行范围内（没有运行到该算法或者已经运行了该算法，就是上面代码的before与after部分）。若有则进一步的判断。L3首先判断number是否为0，为0则说明尚未选号，其次判断是否进程号比自己小的进程是否拥有更小的选号。若有则不进入临界区。
+
+可以看到整个算法的设计思路是一种类似黑名单的设计思路。算法大致可以分为两个部分：选号部分以及“黑名单”判断部分。
+
+先说黑名单部分，代码思路可以理解为我不关心我什么时候应该进入临界区，我只关心我什么时候绝对不能进入临界区。这不像加锁的算法，加锁的算法代码部分关心的是我什么时候可以进入临界区，这是一种白名单的思路。我猜测其他所以的无锁的互斥算法都是这个思路。
+
+重要的是最后要给出证明，证明的这样的思路最终会使所有的进程都能以某种顺序进入临界区而不是进入死锁，这个证明才是最难的。
+
+
+再说选号部分，这部分可以根据Lamport分布式时钟的那篇论文来理解。选号的大小代表了选号操作的先后顺序，根据逻辑时钟的概念，逻辑时钟不能违背事件之间的因果关系。
+
+现在我们定义如下的因果关系。若进程i的选号过程中，其从进程j中读取number值的操作发生在进程j写入自己的number值操作之后。则认为进程i的选号操作发生在进程j的选号操作之后。
+
+注意，存在这样一种情况，假若两个进程同时根据同一时刻的number[1..N]数组选出自己的号码，则这两个号码必然相等，这两次选号操作之间也没有因果关系，可以认为是并行的。
+
+那么现在我们就需要建立一个逻辑时钟，使其不违背上述因果关系，且能给所有的选号操作进行排序。
+
+显然，为了不违背上述因果关系，进程i在时刻t的时候其选号要大于当前所有其他进程的选号。因此有1 + maximum(number[1], ..., number[N])。当进程选号相同的时候，根据进程号确定先后关系。如此(number[i], i)就我们要找的全局逻辑时钟。
+
+Lamport说该算法启发了他之后的所有研究诚不欺我。
+
+最后，我们看下面包房算法为什么不会死锁？假若存在死锁，则存在进程在循环L2或L3处死循环，显然因为当前choosing=0，L2绝不会无限循环。那么就是L3死循环，若L3死循环，要么所有的number[j]=0，显然当前number[i] >= 1，因此不成立，则必然是进程i每次都发现(number[j], j) < (number[i], i)成立。若该条件成立，其他的进程j中该条件必然不会永远成立，因此其他进程j会有一个跳出L3循环，进入临界区。而其他进程只要不在临界区挂掉，必然会再次选号，由于进程i已经死循环在L3，其number[i]的值最终会被超过，从而导致进程i无法在L3处永远循环，因而矛盾。
+
+[0]:http://lamport.azurewebsites.net/pubs/pubs.html#bakery
