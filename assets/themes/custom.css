@@ -4,3 +4,7 @@ hr{
 
 	border: 1px dashed #000000;
 }
+
+pre{
+	line-height: 1.5em;
+}
