@@ -1,4 +1,14 @@
-Lamport论文“A New Solution of Dijkstra’s Concurrent Programming Problem”
+---
+layout: post
+title: A New Solution of Dijkstra’s Concurrent Programming Problem
+description: ""
+category: 分布式
+tags: [分布式]
+---
+{% include JB/setup %}
+
+* toc
+{:toc}
 
 在这篇论文中，Lamport给出了一个多进程互斥算法，lamport本人非常看重这个算法，这是一个神奇的算法，它甚至不要求读写操作的原子性，也不关心读操作返回的任何值，lamport在http://lamport.azurewebsites.net/pubs/pubs.html#bakery 上说其之后的不少成果根源于此，甚至说关羽并发的一切都是来自研究该算法。
 
@@ -36,7 +46,7 @@ end
 //something after
 ```
 
-我们允许进程i在任意时刻失败,然后在非临界区重启（同时choosing[i] = number[i] = 0）. 然而，如果一个进程一直失败重启，那么真个系统会死锁。
+我们允许进程i在任意时刻失败,然后在非临界区重启（同时choosing[i] = number[i] = 0）. 然而，如果一个进程一直失败重启，那么整个系统会死锁。
 
 ## Proof of Correctness
 
