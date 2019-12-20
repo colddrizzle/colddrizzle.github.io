@@ -218,6 +218,10 @@ if(a_is_running != 1){
 C11开始才规范化了c语言的内存模型，基本上与C++一致。
 C++的内存模型可以参考[这里][11].
 
+上面资料中各种概念的关系图如下：
+
+![img](/assets/resources/cpp_mm_concepts.png)
+
 C++的内存模型看着很多，实际上只有三类：relaxed，acquire&release语义，seq_cst。
 consume模型被C++规范[暂时劝止使用了][11]。
 
@@ -247,7 +251,7 @@ https://www.zhihu.com/question/24301047
 
 ## 内存屏障
 上面讲到实际的硬件往往不是顺序一致性的甚至不保证某些loadload、storestore顺序，但是程序大多是是按照顺序一致性的模型来编写或者要求acquire与release语义，因而硬件层面一般会提供各种手段来增强自己的内存模型，
-其中一种方式就是内存屏障。
+其中一种方式就是内存屏障。关于内存屏障的理解可以参考[Memory Barriers: a Hardware View for Software Hackers][104]
 
 同样，在不同的层次，内存屏障也有不同的概念。据笔者理解，至少可以分为具体硬件的内存屏障，综合各种硬件的抽象的内存屏障，以及程序语言语义上的内存屏障三种。
 
@@ -407,4 +411,5 @@ https://www.cs.utexas.edu/~bornholt/post/memory-models.html
 [101]:https://preshing.com/20120710/memory-barriers-are-like-source-control-operations/
 [102]:https://preshing.com/20120625/memory-ordering-at-compile-time/
 [103]:https://preshing.com/20120515/memory-reordering-caught-in-the-act/
+[104]:http://www.rdrop.com/users/paulmck/scalability/paper/whymb.2010.07.23a.pdf
 
