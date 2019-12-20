@@ -56,11 +56,49 @@ CPU则数据与地址都要输出
 
 ## 现代计算机各硬件访问延时
 
+### 内存访问延迟
+
+https://www.7-cpu.com/cpu/Skylake.html
+
+根据aida64测试。
+
+内存时序
+
 
 ## 高速缓存策略为什么能有效
-内存与CPU的带宽
-读取内存与CPU读取L1的延迟
+参考 cpu-cache那一篇文章。
 
 ## 上下文切换的开销
-TLB
+https://www.quora.com/How-long-does-a-context-switch-take
+下面这是上面quora的一个回答的引用  该引用的计算因为不合理被修改了
+https://wiki.osdev.org/index.php?title=Context_Switching&diff=22557&oldid=21506
+
+https://blog.tsunanet.net/2010/11/how-long-does-it-take-to-make-context.html
+
+下面这篇文章比较重要，关于里面提到NTPL论文，O(1)调度器以及futex原理最好也看一下。
+https://eli.thegreenplace.net/2018/measuring-context-switching-and-memory-overheads-for-linux-threads/
+
+https://news.ycombinator.com/item?id=13930305
+
+综合上面的资料可以一次上下文切换包括建立新的地址空间大约需要1μs到10μs之间。
+
+## 函数调用的开销
+
+## 时钟中断的开销
+
+
+## 硬件带宽的未来趋势
+
+GbE 100MB/s
+
+SSD 500MB/s
+
+modern cpu max memory bandwidth:85GB/s https://ark.intel.com/content/www/us/en/ark/products/96900/intel-xeon-processor-e7-8894-v4-60m-cache-2-40-ghz.html
+
+The Future:https://blog.westerndigital.com/cpu-bandwidth-the-worrisome-2020-trend/
+
+TbE 100GB/s
+
+SSD ?
+
 

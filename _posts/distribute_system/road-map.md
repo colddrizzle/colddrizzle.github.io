@@ -28,3 +28,9 @@ https://www.imooc.com/article/286118  这里提供了一点入门。
 这篇博客涉及到的问题
 https://blog.csdn.net/iteye_16474/article/details/82726634
 https://blog.csdn.net/yaotai8135/article/details/83050138
+
+
+缓存在高并发下的问题
+https://www.cnblogs.com/dinglang/p/6133501.html
+https://www.jianshu.com/p/652f64f49dca
+https://stor.51cto.com/art/201910/604451.htm
