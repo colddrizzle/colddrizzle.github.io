@@ -5,6 +5,12 @@ hr{
 	border: 1px dashed #000000;
 }
 
+pre{
+	background-color: lightgrey;
+}
+
 code{
 	line-height: 2em;
+
+	background: lightgrey;
 }

@@ -45,5 +45,18 @@ tags: [python]
 python中对象模型一图表达就是：
 ![img](/assets/resources/python_type_model.jpeg){:width="100%"}
 
+以下结论仅针对新式类：
+
+python中一切皆对象，但是类型对象之间有两条链，一个是继承链也就是__base__属性，一个是类型链也就是__class__属性。
+继承链的根为空，类型链的根为死循环，也就是：
+
+	根type对象__base__为object，但是__class__为type。
+	根object对象__base__为空，但是__class__为type。
+
+那我们平时所说的对象指的是`__base__`属性不存在的对象，这时候对象只有一条类型链。
+
+判断一个对象是不是类型可以通过判断`__base__`属性是否存在或者判断isinstance(obj,type)是否为真。
+
+
 [0]:https://medium.com/javascript-scene/the-forgotten-history-of-oop-88d71b9b2d9f
 [1]:http://web.eecs.utk.edu/~huangj/CS302S04/notes/oo-intro.html

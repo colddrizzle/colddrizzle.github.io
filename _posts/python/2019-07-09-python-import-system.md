@@ -25,7 +25,7 @@ pkg/
 ```
 在mod1.py所在目录打开交互式python窗口中分别加载module与package，可以看出其类型都是module，但是个别字段的值不一样，
 这些字段的作用稍后会讲。
-![img](/assets/resources/python_import_system_0.png)
+![img](/assets/resources/python_import_system_0.png){:width="100%"}
 
 在package系统下，模块导入有两种语法，带from的与不带from的。
 
@@ -63,7 +63,7 @@ python标准文档里语言规范部分[import词条][1]详细解释了import的
 #### python2.3实现了Pep302关于import hook的内容
 #### python2.5引入了相对导入与绝对导入的概念
 鉴于上面提到的覆盖系统模块的问题，[python2.5完整实现了pep328的内容][2]，引入了绝对导入与相对导入的概念。
-所谓相对导入指的是相对于导入语句所在的module，语法与浏览Unix/linux文件系统的方法类似，需要注意的是**隐式相对导入所在额块本身必须处于package系统中**。所谓处于package系统指的是处于一层层的package构成树状结构里面。
+所谓相对导入指的是相对于导入语句所在的module，语法与浏览Unix/linux文件系统的方法类似，需要注意的是**隐式相对导入所在模块本身必须处于package系统中**。所谓处于package系统指的是处于一层层的package构成树状结构里面。
 所谓绝对导入就是指定模块的从`sys.path`开始的完整路径。
 
 <pre class="brush:python;">
@@ -80,11 +80,13 @@ from ..pkg import time
 根据新的规范，原来的`import xxx`访问了当前目录下模块的行为被称为隐式相对导入，而.符号相对导入称为显式相对导入。虽然2.5之后3.0之前仍然默许隐式相对导入行为，但是
 可以通过`from __future__ import absolute_import`来关闭隐式相对导入，从而保证`import xxx`有唯一的语法含义。
 
-#### python2.7支持main模块内的相对导入
-此处的main模块是指通过-m选项运行的main模块，此时main模块在包系统之内。若直接运行包含相对导入的模块，则python不会认为模块处于包系统之内，即便
+#### python2.7支持main模块内的显式相对导入
+此处的main模块是指通过-m选项运行的main模块，此时main模块在包系统之内，但由于包系统通过模块`__name__`属性来维持，
+因而用-m时main模块虽在包系统内，但是却无法定位相对导入。新技术简单概括就是新增加`__package__`属性用于维系包系统层级，具体技术细节参见[pep366][11]。
+
+注意若直接运行包含相对导入的模块，则python不会认为模块处于包系统之内，即便
 文件夹下有`__init__.py`也不行。
 
-具体技术细节参见[pep366][11]，简单概括就是新增加`__package__`属性用于维系包系统层级。
 
 至于-m选项的工作原理参考[pep338][12]，大致可以理解为当使用-m选项时候，[pep302][13]描述的导入机制用来定位加载模块，然后将该模块作为顶层模块来执行。
 且使用-m选项的时候会将整个包系统的顶层目录加入`sys.path`，将脚本的绝对路径作为`sys.argv[1]`。而直接运行包内模块，只会将模块所在目录加入搜索路径，同时`python xxx.py`这种直接运行方式只会将`xxx.py`传个`sys.argv[1]`，也就是你写的是什么就传什么。
@@ -166,7 +168,7 @@ dis.dis(co)
 稍微复杂点的是`IMPORT_NAME`指令，其调用的是内建函数`__import__`。关于这个函数，文档有[详细说明][4]。
 查看`__import__`函数文档说明可以发现，该函数需要5个参数。然后`import`语句就算是`from xx import xx`语句好了，最多是两个参数，那么这5个参数是怎么来的呢?
 
-原来python代码经过编译，import语句被处理分解了。globals与locals代表执行import语句所在的frame的环境。至于`fromlist`不要被名字所误导，指的是`from ..A.B import C,D`中后半部分也就是`C,D`。至于`level`若是正数指的的是`from`语句中`.`的数目，若是0指的是绝对导入，若是-1则先执行相对导入再执行相对导入，也就是`import xxx`发生隐式相对导入的情况。cpython中会先根据globals与level确定出`A.B`。然后依次加载A，然后以A为父目录加载B，依次类推。加载完毕后会通过ensure_fromlist()函数将fromlist中的模块也加载进来。注意到目前为止所有的都是指的是加载，而不是名字绑定。
+原来python代码经过编译，import语句被处理分解了。globals与locals代表执行import语句所在的frame的环境。至于`fromlist`不要被名字所误导，指的是`from ..A.B import C,D`中后半部分也就是`C,D`。至于`level`若是正数指的的是`from`语句中`.`的数目（level的初始化在compile.c的compiler_import函数中），若是0指的是绝对导入，若是-1则先执行相对导入再执行相对导入，也就是`import xxx`发生隐式相对导入的情况。cpython中会先根据globals与level确定出`A.B`。然后依次加载A，然后以A为父目录加载B，依次类推。加载完毕后会通过ensure_fromlist()函数将fromlist中的模块也加载进来。注意到目前为止所有的都是指的是加载，而不是名字绑定。
 
 整个导入过程的伪码如下：
 
@@ -249,7 +251,7 @@ imp模块是`import.c`的简单封装，importlib是3.1引入的python实现的`
 其中原来`__name__`属性是用来维系package系统的层级关系的，但[Pep366][11]提出-m下package系统内的被当成main module的模块内相对导入的问题，
 此时，main module虽然处于package系统内，但是其`__name__`属性被设置为`__main__`，无法用于package系统的索引，因此新增`__package__`属性。
 pep366解决的问题如图:
-![img](/assets/resources/pep366_0.png)
+![img](/assets/resources/pep366_0.png){:width="100%"}
 
 [0]:https://www.python.org/doc/essays/packages/
 [1]:https://docs.python.org/2/reference/simple_stmts.html#the-import-statement
