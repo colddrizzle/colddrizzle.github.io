@@ -53,3 +53,41 @@ os.path.join("F:\\web", os.sep)
 根据https://docs.python.org/2.7/library/os.path.html#os.path.join 的解释，join函数把os.sep当成了绝对路径从而将之前的内容丢弃。
 但是windows上的绝对路径肯定是以盘符开头的，所以可以认为这是个bug。正确的用法保证os.path.join参数的后面的部分不要以斜线开头。
 
+
+## BASE64编码报错:UnicodeEncodeError: 'ascii' codec can't encode characters in position 0-2: ordinal not in range(128)
+
+这个问题咋看上去很奇怪，base64是对2进制进行编码啊，关ascii什么事情？
+
+与[stackoverflow上的这个问题](https://stackoverflow.com/questions/305140/base64ing-unicode-characters?r=SearchResults)一样
+
+原因是直接用unicode字符串作为参数调用函数，如下：
+
+```
+print base64.b64encode(u'\xfc\xf1\xf4')
+
+```
+unicode在python中是以字符串来存储的，因为unicode不是一种具体的编码方案，只是编码空间，因此落地成任何具体的2进制都不太合适。
+
+而base64编码是针对二进制进行的编码，因此上面的语句在运行时首先会进行将unicode字符串编码为默认的编码方案。这个默认的编码方案就是通过
+`sys.getdefaultencoding()`获得的编码，python2中是“ascii”。显然，任意的unicode码位是不可能一定编码为ascii的。因为unicode编码空间比ascii大多了
+。
+
+因此解决方案是：
+* 将unicode根据合适的编码方案转为str之后再编码
+* 设置`sys.setdefaultencoding()`。但这个函数在cpython启动的时候从sys模块中删除掉了。因此用之前需要`reload(sys)`。但也由此可以认为python官方不希望我们去改这个默认编码，具体为什么还不清楚，方案二不推荐。
+
+
+需要注意的是这个默认编码与源文件开头的codingline不同。
+
+源文件开头的codingline是确定文件要以何种编码解析以进行词法、语法分析。而默认编码这是代码中unicode与str互相转化的默认编码。
+
+
+## 路由
+
+`@route('/static/<filename>')`
+filename中带斜杠就会路由出错
+
+使用[path filter](http://bottlepy.org/docs/dev/tutorial.html#routing-static-files)
+
+
+
