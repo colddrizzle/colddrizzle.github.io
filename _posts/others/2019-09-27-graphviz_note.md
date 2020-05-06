@@ -6,7 +6,7 @@ tags : [dot,graphviz]
 title : graphviz文档笔记
 ---
 
-graphviz的文档很多地方不够详细，不实际探索一下很难明白什么意思，本文记录了探索的结果。
+graphviz的文档很多地方不够详细，不实际用一下很难明白什么意思，本文记录了探究的结果。
 
 1. toc
 {:toc}
@@ -27,14 +27,14 @@ API部分提供了常用几种语言风格的API，使用API就不用手动组�
 * 自己编译graphviz获得gv.3python接口规范的lib
 * pip install pygraphviz 但在windows平台python2下安装失败了，没有深究。
 * pip install graphviz 
-最终决定使用的是第三个，这个好像也是MIT提供的，整个lib非常简单轻量，就是用python组织文件，然后起一个进场调用dot工具渲染。
+最终决定使用的是第三个，这个好像也是MIT提供的，整个lib非常简单轻量，就是用python组织文件，然后起一个进程调用dot工具渲染。
 
 
 ## dot语言
 dot语言的[语法][2]还是比较简单的。描述图形实体用的元素只有graph、subgraph、node、edge四种。
 每种元素都可以定义若干属性，官方文档有全部的[属性列表][3]，需要注意的是属性适用的元素类型，并且有的属性仅仅由某些引擎或某些输出格式支持。
 
-一个dot描述文件必然包含在一个graph元素中，并且graph元素只有一个，且graph可以匿名。需要注意的是，图只能是有向图digraph或是无向图graph中的一种，有向图的边必须都是`->`，无向图的边必须都是`--`。不能是部分边有向、部分边无向这种混合形式，如果想表达这种形式，可以通过设置[dir属性][4]。
+一个dot描述文件必须包含在一个graph元素中，并且graph元素只有一个，且graph可以匿名。需要注意的是，图只能是有向图digraph或是无向图graph中的一种，有向图的边必须都是`->`，无向图的边必须都是`--`。不能是部分边有向、部分边无向这种混合形式，如果想表达这种形式，可以通过设置[dir属性][4]。
 ```
 //wrong example
 graph{
@@ -71,8 +71,8 @@ digraph{
 注意dir属性在digraph中默认是forward，在graph中默认是none。这个forward的方向依据是rankdir属性，rankdir属性默认是`TB`,也就是`top to bottom`。
 
 
-用于修饰`graph`或者`digraph`的`strict`则限定了相同的边只话一条。所谓相同的边，在graph中指的是两个端点相同的边定义，在digraph中指的是断点相同且
-方向相同的边，这个方向指的是`->`的箭头方向，与`dir`导致的箭头属性无关。相同的边判定不包括属性，且所有的相同的边的属性会归拢到一起。
+用于修饰`graph`或者`digraph`的`strict`则限定了相同的边只绘制一条。所谓相同的边，在graph中指的是两个端点相同的边定义，在digraph中指的是端点相同且
+方向相同的边定义，这个方向指的是`->`的箭头方向，与`dir`导致的箭头属性无关。相同的边判定不包括属性，且所有的相同的边的属性会归拢到一起。
 ```
 //定义了相同的边，一个指明箭头，一个指明颜色，最后的a--b的属性会两个都包括。
 strict graph{
@@ -177,7 +177,7 @@ graph{
 ![img](/assets/resources/graphviz-subgraph-1.png)
 
 *  提供一个上下文用于给一类点或边定义属性，参见上一小节属性作用域。其实最常用的是指定`rank`属性，参见下面特殊属性的介绍。
-*  一类以cluser靠头命名的subgraph会将子图内的点排到一起并用一个框围起来。这种用法并不是dot语言的语法，而是某些布局引擎支持的特性，目前所知，dot引擎是支持的。
+*  一类以cluster开头命名的subgraph会将子图内的点排到一起并用一个框围起来。这种用法并不是dot语言的语法，而是某些布局引擎支持的特性，目前所知，dot引擎是支持的。
 ```
 graph{
 	subgraph cluster_0{b c}
@@ -386,6 +386,40 @@ layer属性只支持postscript格式，所以运行命令`dot -Tps -O input_file
 
 ### constraint
 当设置该属性后，排版引擎排版的时候不再考虑这条边，排完版后再把这条边添加上去。文档中的[例子][11]非常明晰了，不再细表。
+
+
+## 技巧
+### 如何绘制漂亮的二叉树
+
+[这里](https://zhuanlan.zhihu.com/p/62777936)给出的方法并不能应对复杂的二叉树，
+特别是会使得ordering属性失效，比如下面这个例子
+```
+graph{
+    node[shape=circle]
+    ordering=out
+    {
+      node[color=black,style=filled,fontcolor=white]
+        1,7,11,14
+    }
+    11--2
+    11--14
+    2--1
+    2--7
+    14--il
+    14--15
+    7--5
+    7--8
+    5--4
+    5--ir
+}
+
+```
+
+另一种方法就是配合ordering=out，添加三个隐藏节点，分别为左孩子，中孩子，右孩子。把二叉树当成三叉树来画，凡是缺少孩子的地方
+就补上上面的隐藏节点，然后把线段也设置为隐藏的。这个方法产生的一定是二叉树样式，但还是不够美观。
+
+结论是：暂时不要用graphviz画二叉树。
+
 
 [0]:https://graphviz.gitlab.io/about/
 [1]:https://graphviz.gitlab.io/gallery/

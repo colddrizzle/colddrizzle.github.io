@@ -50,7 +50,8 @@ java.util.concurrent包 全部搞懂
 
 -------------------------------------------- 开放式路线图 ----------------------------
 
-阿里巴巴java语言规范
+阿里巴巴java编码规范
+java se安全编码指导：https://www.oracle.com/technetwork/java/seccodeguide-139067.html
 
 分布式系统
 	远程过程调用
@@ -73,6 +74,41 @@ maven
 6月之前走到这一步
 ----------------------------------------------------------------
 网站框架研究
+
+
+
+----------------------JAVA 语言及平台基础
+
+一个java对象至少占用内存的大小 C++里的RALL
+
+https://docs.oracle.com/en/java/javase/13/index.html
+
+https://docs.oracle.com/javase/7/docs/technotes/guides/rmi/index.html
+
+https://docs.oracle.com/javase/9/rmi/toc.htm
+
+
+
+2015系列 基于1.8的tutoral写个笔记系列吧
+
+ java平台roadmap参考如下：
+https://docs.oracle.com/javase/8/docs/technotes/guides/
+https://docs.oracle.com/javase/tutorial/tutorialLearningPaths.html
+
+transient关键字
+
+-----------------------
+阅读java源码时应关注的问题：
+用到的设计模式
+extends 与 implement的使用 抽象类 抽象方法的使用
+final的使用 理解那个场景下为什么做这样的设计选择
+
+
+----------------------------
+??? 记一次Event Storming实战经历 DDD 微服务 serverless
+DDD:https://medium.com/hackernoon/how-to-decompose-a-system-into-modules-796bd941f036
+
+
 
 
 

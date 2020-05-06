@@ -1,0 +1,2 @@
+
+what's string in java:https://docs.oracle.com/javase/specs/jls/se8/html/jls-4.html#jls-4.3.2

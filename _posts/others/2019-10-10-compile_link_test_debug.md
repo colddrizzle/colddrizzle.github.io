@@ -2,7 +2,7 @@
 layout: post
 title: 编译链接调试疑问
 description: ""
-category: compile
+category: 编译链接
 tags: [compile, link, debug,questions]
 ---
 {% include JB/setup %}

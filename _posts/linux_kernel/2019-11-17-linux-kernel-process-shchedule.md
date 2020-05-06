@@ -2,7 +2,7 @@
 layout: post
 title: 现代操作系统linux系统下的进程调度
 description: ""
-category: linux_kernel
+category: linux内核
 tags: [os, linux, shchedule]
 ---
 {% include JB/setup %}
