@@ -43,6 +43,8 @@ gem来运行的。
 
 export PATH=$HOME/.gem/ruby/X.X.0/bin:$PATH
 
+//export PATH=$HOME/.gem/ruby/2.5.0/bin:$PATH
+
 ```
 ruby与rubygems是独立的，不同版本的ruby的gem被安装到了不同的目录(具体看是按照到全局还是用户级`gem env`里可以查看按照位置)，且都自动生成了一个gem的包装命令。
 也就是上面的bin目录中。
