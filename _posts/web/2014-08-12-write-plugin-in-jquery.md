@@ -1,6 +1,6 @@
 ---
 layout: post
-category : web前端
+category : web
 tagline: "Supporting tagline"
 tags : [JQuery, 插件]
 title: 如何在JQuery下开发插件
