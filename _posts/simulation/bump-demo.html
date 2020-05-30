@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head> 
+<meta charset="utf-8"> 
+<title>水平抛物线运动模拟</title> 
+</head>
+<body>
+
+<canvas id="myCanvas" width="1400" height="600" style="border:1px solid #d3d3d3;">
+您的浏览器不支持 HTML5 canvas 标签。</canvas>
+
+<script>
+var c=document.getElementById("myCanvas");
+var ctx=c.getContext("2d");
+
+let hv = 5 // m/s
+let ha = -0.2
+let vv = 0 
+let g = 9.8 // m/s^2
+let bx = 0; // dm
+let by = 0; // dm
+let bump_loss = 1/3;//每次触地损失速度比例
+
+function next_position(t){
+	hv = hv + ha*t;
+	if(hv <= 0){
+		hv = 0;
+		ha = 0;
+	}
+	hs = hv*t + 0.5*ha*t*t;
+	vs = vv*t + 0.5*g*t*t;
+	vv = vv + g*t;
+
+	bx = bx + hs*10;
+	by = by + vs*10;
+
+	let contact2earth = false;
+	
+	if(by > 600){
+		by = 1200 - by;
+		contact2earth = true;
+		vv = vv*(1-bump_loss);
+		vv = -vv;
+	}
+
+	return [bx, by, contact2earth];
+}	
+
+function drawBall(x, y){
+	ctx.clearRect(0,0,1400,600);
+	ctx.beginPath();
+	ctx.strokeStyle="rgb(200,150,100)";
+	ctx.arc(x, y, 5, 0, 2*Math.PI);
+	ctx.closePath();
+	ctx.stroke();
+	ctx.fillStyle="rgba(200,150,100,0.8)";
+	ctx.fill();
+
+	ctx.fillText(hv+" "+vv, 700,300);
+}
+let time = new Date();
+t0 = time.getTime()/1000;
+drawBall(bx, by);
+
+requestAnimationFrame(function draw(){
+	time = new Date();
+	t1 = time.getTime()/1000;
+
+	r = next_position(t1-t0);
+
+	drawBall(r[0], r[1]);
+
+	t0 = t1;
+
+	if (r[1] > 1400){
+		
+	}
+	requestAnimationFrame(draw);
+});
+
+</script>
+
+</body>
+</html>
