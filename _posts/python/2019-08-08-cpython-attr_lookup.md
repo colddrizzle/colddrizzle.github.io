@@ -46,7 +46,6 @@ print foo(2)
 print type(foo).__call__(foo,2)
 </pre>
 
-
 ## 属性查找的入口
 
 在探究这个问题之前，让我们先看看在新式类的普通对象中进行属性查找发生了什么，我们用下面的代码做例子：
@@ -98,28 +97,34 @@ PyObject_GetAttr(PyObject *v, PyObject *name)
 }
 </pre>	
 
-根据update_one_slot函数，tp_getattr是一个废弃字段。访问属性`a.b`等价于调用`TYPE(a).tp_getattro(a, b)`。
+根据update_one_slot函数，tp_getattr是一个废弃字段。访问属性`a.b`等价于调用`TYPE(a)->tp_getattro(a, b)`。
 
 <pre>
 注意，在未覆盖__getattribute__与__getattr__的情况下:
-	a.b 等价于 TYPE(a).tp_getattro(a, b) 
+	a.b 等价于 TYPE(a)->tp_getattro(a, b) 
         等价于 a.__getattribute__(b) 但又不一样。
             因为a.__getattribute__(b)翻译成字节码相当于
-            attr_func = TYPE(a).tp_getattro(a,'__getattribute__'); 
+            attr_func = TYPE(a)->tp_getattro(a,'__getattribute__'); 
             attr_func(b)
 
-或者说TYPE(a).tp_getattro(a, b)一定是调用的TYPE(a)自己的方法，哪怕是个桥接方法。
+或者说TYPE(a)->tp_getattro(a, b)一定是调用的TYPE(a)自己的方法，哪怕是个桥接方法。
 而a.__getattribute__(b)中的__getattribute__方法却不一定是a自己的方法。
 
 </pre>
 
-所以问题是tp_getattro是什么样的函数？根据cpython中slotdefs的定义我们知道，tp_getattro永远指向该字段所在类型的
-`__getattribute__`与`__getattr__`方法，哪怕这些方法不在当前类型的dict中。
+所以问题是tp_getattro是什么样的函数？根据cpython中[slotdefs的定义][6]我们知道，tp_getattro永远与该字段所在类型的python层面的
+`__getattribute__`与`__getattr__`方法关联。这种关联是写死的，我们知道python层面的对象方法其属性查找链上找到，因此不一定在对象本身的字典中。
+在[cpython slots][7]中我们知道add_operators()函数会将`__getattribute__`与`__getattr__`方法添加到类型字典中。
+因此这种关联的意义是：python层面调用`__getattribute__`与`__getattr__`方法，一定会找到tp_getattro字段，默认情况下tp_getattro字段对应的c函数
+是slot_tp_getattr_hook，这是一个桥接函数，下面会将，从这个桥接函数中可以看出，一个调用`a.__getattribute__(b)`大致会先从类型及其父类型的继承链中确认`__getattribute__`合适的实现，再用这个实现去查找属性b。打个比喻的话，就是先确定车，在用这车顺着轨道（两个继承链）查找属性b。
+
+我们还可以注意到，车总是类型创建者的车，a.b总是用TYPE(a)的`tp_getattro`字段指向的c函数作为车。[cpython slots][7]这篇文章详细讲了“车”的维护。
 
 根据类创建那篇文章，根据`update_one_slot`方法的逻辑，只有一种情况会继承slot字段，也就是所谓的"规整情况"。显然，未定义`__getattr__`与`__getattribute__`时，这两个函数所对应的字段都是tp_getattro的默认值，也就是继承来的值。 元类型会继承自根type的`type_getattro`， 次生类型会继承自根object的`PyObject_GenericGetAttr`。因此对于任意的`a.b`，若a为类型对象（元类型与次生类型都可以），则相当于调用
 `type_getattro(a, b)`。若a为非类型对象，则相当于调用`PyObject_GenericGetAttr(a, b)`。
 
 若是定义了`__getattr__`与`__getattribute__`中至少一个之后，tp_getattro字段仍然要保持指向这两个方法的约束，但是一个字段如何同时指向两个不同的方法呢？答案就是桥接函数[slot_tp_getattr_hook][5]。这个函数可以简化成如下的伪代码:
+
 <pre class="brush:c;">
 slot_tp_getattr_hook(self, name){
 	type = TYPE(self);
@@ -161,7 +166,7 @@ slot_tp_getattr_hook(self, name){
 可以看到，当a.b执行的时候，需要使用`type(a)->tp_getattro`字段，而这个字段被替换成了从type(a)及其MRO查找的`__getattribute__`与`__getattr__`函数。
 
 
-## `__getattr__、__getattribute__`与tp_getattro字段的关系
+## `__`getattr`__`、`__`getattribute`__`与tp_getattro字段的关系
 
 这三个都是定义在类型中的方法，目的是给该类型是实例使用。
 无论何时，tp_getattro字段与这两个函数都保持一致性。
@@ -216,7 +221,11 @@ print Cls.a
 在非类型对象a中定义这两个方法，若是通过a.b来访问，则不会有任何影响。
 因为属性访问会先从TYPE(a)以及其MRO中寻找属性访问方法。
 
-## 元类型tp_getattro字段
+## 默认的“车”
+前面讲过，属性查找先确定查找该属性的车。以下就是类型对象以及普通对象默认的“车”，所谓默认就是
+没有自定义`__getattr__`与`__getattribute__`函数。
+
+### 元类型tp_getattro字段
 根据[type_getattro()][3]源码，可以抽象出如下伪代码：
 
 <pre class="brush:c;">
@@ -228,7 +237,7 @@ type_getattro(type, name){
 
 	meta_attr = lookup_in_mro_dict(metatype, name);
 
-	//如果从meta类型中找到且是数据描述符，直接返回
+	//如果从meta类型及其mro中找到且是数据描述符，直接返回
 	//从而达到覆盖type及其mro中同名属性的目的
 	if( meta_attr && is_datadescriptor(meta_attr)){
 		meta_get = TYPE(meta_attr)->tp_descr_get;
@@ -262,8 +271,9 @@ type_getattro(type, name){
 }
 
 </pre>
+从上面代码可以看出，一般情况下type以及mro中的属性覆盖metatype及其mro中的属性，除非metatype中该属性是数据描述符。
 
-## 次生类型tp_getattro字段
+### 次生类型tp_getattro字段
 根据[PyObject_GenericGetAttr][4]源码，可以抽象出如下伪代码：
 
 <pre class="brush:c;">
@@ -276,7 +286,7 @@ PyObject_GenericGetAttr(obj, name){
 	//源码中Py_TPFLAGS_HAVE_CLASS的解释见
 	//https://docs.python.org/2/c-api/typeobj.html#Py_TPFLAGS_HAVE_CLASS
 
-	//obj类型中如果找到该属性且是数据描述符
+	//obj及其mro中如果找到该属性且是数据描述符
 	//则直接返回，从而覆盖obj自己字典中的同名属性
 	if(attr){ 
 		_get = attr->ob_type->tp_descr_get;
@@ -311,6 +321,7 @@ PyObject_GenericGetAttr(obj, name){
 }
 
 </pre>
+从上面代码可以看出，一般情况下obj字典中的属性覆盖type及其mro中的属性，除非type中该属性是数据描述符。
 
 ## 属性查找与描述符协议
 
@@ -387,3 +398,5 @@ https://www.cnblogs.com/xybaby/p/6270551.html
 [3]:https://github.com/python/cpython/blob/2.7/Objects/typeobject.c#L2606
 [4]:https://github.com/python/cpython/blob/2.7/Objects/object.c#L1463
 [5]:https://github.com/python/cpython/blob/2.7/Objects/typeobject.c#L5652
+[6]:https://github.com/python/cpython/blob/2.7/Objects/typeobject.c#L6054
+[7]:/2019/08/13/cpython-slots

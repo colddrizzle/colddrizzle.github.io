@@ -28,4 +28,9 @@ root ='img' os.getcwd()= "F:\\web" ，结果root变为根目录"F:\\"
 root = os.path.join(os.path.abspath(root), os.sep)
 
 
+
 了解下gevent greenlet协程库
+
+python版本管理：
+pyenv与virtualenv的区别：前者管理python版本，后者创建某个python版本的虚拟干净运行空间
+https://www.liaoxuefeng.com/wiki/1016959663602400/1019273143120480

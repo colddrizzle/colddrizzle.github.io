@@ -2,7 +2,7 @@
 layout: post
 title: CLRS C.12--binary search tree
 description: ""
-category: 算法导论
+category: 算法
 tags: [算法导论, 二叉树, 数据结构, 算法, 基础知识]
 ---
 {% include JB/setup %}

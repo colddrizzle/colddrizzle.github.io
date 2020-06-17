@@ -1,6 +1,9 @@
 https://serverfault.com/questions/312221/can-a-single-network-card-have-2-ip-addresses
 
 ## DNS相关
+
+### 查看以及清空DNS缓存
+
 ### nslookup
 
 ### dig
@@ -38,6 +41,9 @@ netstat -nr
 
 ## tcpdump
 
+使用tcpdump命令要区分option与expression部分，哪些属于option哪些属于expression搞清楚了其实很简单，
+比如-i属于option，port and dst host属于expression部分。。。
+
 ### 使用tcpdump来看谁在ping我
 
 https://serverfault.com/questions/448541/how-to-know-who-ping-my-computer
@@ -57,3 +63,6 @@ https://serverfault.com/questions/448541/how-to-know-who-ping-my-computer
 
 5.检查防火墙设置
 
+
+## netwox
+http://c.biancheng.net/view/6378.html

@@ -43,3 +43,14 @@ IP数据报的转发，包括数据报的寻径和传送;
 维护路由表，并与其他路由器交换路由信息，这是IP报文转发的基础。
 IP数据报的差错处理及简单的拥塞控制;
 实现对IP数据报的过滤和记帐。
+
+无线网卡的四种工作模式：
+如何创建adhoc链接 使得两台电脑wifi 对等互联
+有关wifi工作原理的一个系列视频：https://www.ichunqiu.com/course/50577
+
+
+网路问题：非对称路由 A能ping到B但是B不能ping到A是怎么回事
+能ping通但是不能进行tcp通信是怎么回事
+
+https://www.cnblogs.com/mddblog/p/4565562.html
+

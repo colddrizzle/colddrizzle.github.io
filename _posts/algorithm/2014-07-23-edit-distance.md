@@ -2,7 +2,7 @@
 layout: post
 category : 算法
 tagline: "Supporting tagline"
-tags : [算法导论, 编辑距离, 动态规划]
+tags : [算法,算法导论, 编辑距离, 动态规划]
 title: 从编辑距离问题谈动态规划
 ---
 {% include JB/setup %}
