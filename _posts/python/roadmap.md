@@ -27,3 +27,5 @@ bottle中这行代码为什么会出错
 root ='img' os.getcwd()= "F:\\web" ，结果root变为根目录"F:\\"
 root = os.path.join(os.path.abspath(root), os.sep)
 
+
+了解下gevent greenlet协程库
