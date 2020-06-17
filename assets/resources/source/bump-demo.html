@@ -46,6 +46,19 @@ function next_position(t){
 	return [bx, by, contact2earth];
 }	
 
+function info(ctx){
+	px = 700;
+	py = 50;
+	ctx.fillText("高: 60m", px, py);
+	ctx.fillText("水平初速度：5 m/s", px,py+50);
+	ctx.fillText("水平加速度："+ha+" m/s^2", px,py+100);
+	ctx.fillText("水平速度："+hv + "m/s", px, py+150);
+	ctx.fillText("垂直初速度：0 m/s", px, py+200);
+	ctx.fillText("垂直加速度：" + g + " m/s^2", px, py+250);
+	ctx.fillText("垂直速度：" + vv + "m/s", px, py+300);
+	ctx.fillText("触地损失速度："+bump_loss, px, py+350);
+}
+
 function drawBall(x, y){
 	ctx.clearRect(0,0,1400,600);
 	ctx.beginPath();
@@ -56,7 +69,7 @@ function drawBall(x, y){
 	ctx.fillStyle="rgba(200,150,100,0.8)";
 	ctx.fill();
 
-	ctx.fillText(hv+" "+vv, 700,300);
+	info(ctx);
 }
 let time = new Date();
 t0 = time.getTime()/1000;
@@ -70,11 +83,11 @@ requestAnimationFrame(function draw(){
 
 	drawBall(r[0], r[1]);
 
-	t0 = t1;
-
-	if (r[1] > 1400){
-		
+	if(hv === 0){
+		return;
 	}
+
+	t0 = t1;
 	requestAnimationFrame(draw);
 });
 

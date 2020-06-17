@@ -26,3 +26,15 @@ http://blog.sina.com.cn/s/blog_6911e48701012g7s.html
 
 
 https://blog.csdn.net/somyjun/article/details/84589579
+
+
+无线网卡的四种工作模式：
+https://www.cnblogs.com/csnd/p/11807893.html
+如何创建adhoc链接 使得两台电脑wifi 对等互联
+有关wifi工作原理的一个系列视频：https://www.ichunqiu.com/course/50577
+
+
+网路问题：非对称路由 A能ping到B但是B不能ping到A是怎么回事
+能ping通但是不能进行tcp通信是怎么回事
+
+https://www.cnblogs.com/mddblog/p/4565562.html

@@ -100,6 +100,8 @@ TPSLOT("__delattr__", tp_setattro, slot_tp_setattro, wrap_delattr,
   其中d_base就是该字段对应的slotdef条目，d_wrapped是该类型对该字段定义的值。
   如list类型tp_richcompare字段值为list_richcompare。当add_operators阶段，遍历slotdefs，发现`__lt__`,`__gt__`等一众函数对应的字段都是tp_richcompare。因此依次为每个函数名创建一个slot函数。比如`__lt__`其d_base字段就是slotdefs中__lt__函数对应的条目，d_wrapped字段值就是list_richcompare。
 
+  注意add_operators()函数只是在字典里添加Python层面方法入口并将该方法与字段关联，此时该字段对应的具体值是slotdefs里定义的默认值。
+
 ## 三、slot函数访问的一致性与效率性
 
 一个类型的字段若对应一个函数（对应关系必然跟slotdefs一致），那么访问这个函数就有两种方式，
@@ -117,7 +119,7 @@ TPSLOT("__delattr__", tp_setattro, slot_tp_setattro, wrap_delattr,
   * slotdef的wrapper不为空
   * slotdefs中同名的函数后面的会被跳过
 * inherit_slots函数从bases中继承slot，继承的条件是：
- * 当前类型有定义该字段，但是为空
+  * 当前类型有定义该字段，但是为空
 
 * slotptr函数只是根据偏移返回一个指针，并不检测是否有定义该字段或者该字段内容是否为NULL
 

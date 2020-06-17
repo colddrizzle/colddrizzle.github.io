@@ -109,6 +109,8 @@ final的使用 理解那个场景下为什么做这样的设计选择
 DDD:https://medium.com/hackernoon/how-to-decompose-a-system-into-modules-796bd941f036
 
 
+java为什么要有线程组
+
 
 
 
