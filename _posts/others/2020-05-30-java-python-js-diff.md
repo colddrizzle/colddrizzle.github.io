@@ -27,8 +27,24 @@ java中A继承自B，则A的实例与B是什么关系？
 关于实例的概念
 
 
+## 类定义继承
+
+python对象属性与类属性通过词法区分的
+
+java则是通过关键字区分的，写在class里面的属性与方法默认成为实例的属性与方法
+
 
 ---------------
 javascript语言的缺点：
 1. 缺少真正的枚举类型。通常用普通对象来实现。比如语言中的Symbol.hasInstance，但是Symbol作为对象本身也有一些属性比如__proto__,constructor导致
 枚举值不够清晰。
+
+
+try_catch:
+java：定义在try_catch中的变量会导致作用域隔离，而python不会
+
+
+变量提升：
+js变量提升：https://www.runoob.com/js/js-hoisting.html
+python缺少声明变量的语法，自然也就没有变量提升。
+java不允许变量提升。

@@ -253,6 +253,26 @@ imp模块是`import.c`的简单封装，importlib是3.1引入的python实现的`
 pep366解决的问题如图:
 ![img](/assets/resources/pep366_0.png){:width="100%"}
 
+
+### 补充
+
+`from ... import *` 语法不会导入以下划线开头的名字，并且不会导入`...`部分的名字。比如下面这个例子
+
+```brush:python
+# import * will skip any name started by a "_"
+# from ... import * will not import the "..." part
+
+from sys import *
+
+#import sys
+#from sys import _getframe
+
+print _getframe()
+print sys._getframe()
+
+```
+
+
 [0]:https://www.python.org/doc/essays/packages/
 [1]:https://docs.python.org/2/reference/simple_stmts.html#the-import-statement
 [2]:https://docs.python.org/2/whatsnew/2.5.html#pep-328-absolute-and-relative-imports

@@ -111,6 +111,42 @@ DDD:https://medium.com/hackernoon/how-to-decompose-a-system-into-modules-796bd94
 
 java为什么要有线程组
 
+java有没有类似linux kprobe这样的东西
+
+
+一篇博文：被人遗忘的java8的8个功能
+
+https://blog.csdn.net/weter_drop/article/details/84636826
+
+https://www.zhihu.com/question/27720523
+
+https://www.marcobehler.com/2014/12/27/marco-behlers-2014-ultimate-java-developer-library-tool-people-list
+
+https://www.v2ex.com/t/624059 lombok不足之处
+
+java :enclosing scope
+https://www.quora.com/What-is-enclosing-scope-in-Java
+https://stackoverflow.com/questions/33799800/java-local-variable-mi-defined-in-an-enclosing-scope-must-be-final-or-effective
+
+
+虚拟机与类加载器的文章关系：
+
+虚拟机系列应该有个文章
+其中一章是类与接口的生命周期
+而类加载器是这个生命周期中加载那一个环节的事情。
+类加载器注重描述几种类加载器的默认行为
+委托模型、类查找与连接错误
+
+
+java中record有没有对齐需求
+
+
+java中重载
+
+java冷知识：https://segmentfault.com/a/1190000021101318?utm_source=tag-newest
+其中有关string存储与gc的内容，值得注意
 
 
 
+java版本相关：
+https://www.zhihu.com/question/360985479

@@ -54,3 +54,9 @@ IP数据报的差错处理及简单的拥塞控制;
 
 https://www.cnblogs.com/mddblog/p/4565562.html
 
+
+
+诡异的问题：
+macos下udp端口会出现address already in use的情况，但是
+使用`lsof -i:端口号`查看不到进程。使用`netstat -an|grep 端口号`确实能查到，但也没有对应的进程。
+reuseaddr也不管用，该端口到底是处于什么状态，要怎么关闭呢

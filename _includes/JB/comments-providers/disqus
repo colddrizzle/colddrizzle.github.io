@@ -9,24 +9,8 @@
         dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     }
-    /*
-    $(document).ready(function(){
-         $("input.brush").each(function(i,cur){
-             var t=$(cur);//get INPUT
-             var node=$(t).next();//get DIV
-             var code=$(node).find("code")[0];//get CODE
-             $(code).attr("class",$(cur).attr("value"));//set class
-             SyntaxHighlighter.config.tagName="code";
-             SyntaxHighlighter.defaults['toolbar']=false;
-             SyntaxHighlighter.all();
-             add_comment();
-         });
-     });
-*/    
-             SyntaxHighlighter.config.tagName="pre";
-             SyntaxHighlighter.defaults['toolbar']=false;
-             SyntaxHighlighter.all();
-            /* add_comment();*/
+
+    /* add_comment();*/
 
 </script>
 <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>

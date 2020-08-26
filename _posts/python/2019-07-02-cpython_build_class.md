@@ -6,6 +6,11 @@ title: cpython源码阅读之类与实例的创建
 ---
 {% include JB/setup %}
 
+* toc
+{:toc}
+
+<hr />
+
 本篇将大概分析cpython中类对象与实例对象的创建过程，其中新式类与经典类在cpython层面是不同的实现，对于经典类仅仅指出其代码位置不做分析。
 文中出现的type与object若无特别说明都是指的python中最基础的那两个类型对象。
 <hr />
@@ -50,7 +55,7 @@ cpython中除了经典类之外的类型（内建类型、新式类）都是结�
 * tp_getset python里有描述符的概念，将属性访问映射到函数调用。getset就像是在c语言层面的描述符，当读写一个属性的时候，不是访问一个值，而是调用一个函数。
 
 ## 内建类型的创建
-所有内建类型的创建都是通过[PyType_Ready()][0]这个函数初始化的，这一点可以在[_Py_ReadyTypes(void)][1]函数中看到。
+所有内建类型的创建都是通过[PyType_Ready()][0]这个函数初始化的，这一点可以在[`_Py_ReadyTypes(void)`][1]函数中看到。
 这个`_Py_ReadyTypes(void)`就是cpython启动的时候过程之一。
 
 而在此之前，首先通过创建`PyTypeObject`的实例声明一个内建类型，并填充一些关键字段，以`PyType_Type`为例,
@@ -127,15 +132,16 @@ python代码被cpython读取后经过语法分析到语义执行阶段，
 * 否则从传入的bases参数取出第一个base，然后**取它的`__class__`字段作为metaclass**。所以python2中要求新式类必须继承自object，新式类必不为空。
 * 如果是经典类，这个bases是空，则会先查看一个全局字典里有没有`__metaclass__`字段。若没有，直接指定`metaclass = (PyObject *) &PyClass_Type;`，这个PyClass_Type就是经典类的类型。
 经过上面步骤确定meteclass，注意这个metaclass必然是一个PyTypeObject的指针。然后就是`build_class()`方法的核心调用:
-<pre class="brush:c;">
+```brush:c
 result = PyObject_CallFunctionObjArgs(metaclass, name, bases, methods,
                                       NULL);
-</pre>
+```
 `PyObject_CallFunctionObjArgs()`函数里做一些参数检测之后，最后调用到`PyObject_Call()`[源码][7]。核心逻辑是如下两行：
-<pre class="brush:c;">
+
+```brush:c
 call = func->ob_type->tp_call;
 result = (*call)(func, arg, kw);
-</pre>
+```
 
 注意在`build_class`逻辑中确定metaclass的时候，已经取了父类的类型，所以这里的`func`就是父类的类型，然后这里又取了该类型的`ob_type`字段。
 那么对于我们的ClassB来说，其父类是ClassA，ClassA的类型为type，然后又取了type的`ob_type`字段，而type也就是`PyType_Type`在声明是指定了其类型为自身。
@@ -149,7 +155,7 @@ result = (*call)(func, arg, kw);
 
 我们先来看`PyType_Type`的`tp_call`函数也即是[type_call()][8]做了什么?下面是简化扼要的代码:
 
-<pre class='brush:c;'>
+```brush:c
 static PyObject *
 type_call(PyTypeObject *type, PyObject *args, PyObject *kwds)
 {
@@ -177,8 +183,8 @@ type_call(PyTypeObject *type, PyObject *args, PyObject *kwds)
     }
     return obj;
 }
+```
 
-</pre>
 在我们的例子里，参数type就是PyType_Type。可以看到，首先调用tp_new()，根据结构体初始化的值，也即是[type_new()][9]，该函数非常长，也是最终负责分配内存创建一个PyTypeObject类型对象的代码,其主要逻辑:
 1. 分配内存 `type = (PyTypeObject *)metatype->tp_alloc(metatype, nslots);` alloc函数还会将对象的类型字段ob_type设置为metatype。
 2. 填充字段，特别是base字段与tp_alloc字段` type->tp_alloc = PyType_GenericAlloc;`
@@ -197,7 +203,7 @@ type_call(PyTypeObject *type, PyObject *args, PyObject *kwds)
 
 [slot_tp_call()][10]代码如下：
 
-<pre class='brush:c;'>
+```brush:c
 static PyObject *
 slot_tp_call(PyObject *self, PyObject *args, PyObject *kwds)
 {
@@ -213,7 +219,7 @@ slot_tp_call(PyObject *self, PyObject *args, PyObject *kwds)
     Py_DECREF(meth);
     return res;
 }
-</pre>
+```
 
 两幅总体概览图：
 ![user_define_type_1](/assets/resources/user_define_type_1.png){:width="100%"}
@@ -269,10 +275,9 @@ b()
 type_call(typeobj)里面一定会调用typeobj->tp_new的，是因为tp_new的不同，导致type创建类型是不是次生类型。
 
 
-QUESTION:
-C.__new__是什么情况
+## QUESTION
 
-自定义对象的__call__ __new__ __init__情况
+
 
 [0]:https://github.com/python/cpython/blob/2.7/Objects/typeobject.c#L4122
 [1]:https://github.com/python/cpython/blob/2.7/Objects/object.c#L2073

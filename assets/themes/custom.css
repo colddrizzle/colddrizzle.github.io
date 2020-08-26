@@ -6,11 +6,12 @@ hr{
 }
 
 pre{
-	background-color: lightgrey;
+	background-color: #1d5f5a;
+	color:lightblue;
 }
 
 code{
 	line-height: 2em;
-
-	background: lightgrey;
+	color:lightblue;
+	background-color: #1d5f5a;
 }

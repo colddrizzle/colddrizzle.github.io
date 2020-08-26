@@ -12,7 +12,8 @@ default关键字 接口里面写方法？那接口与抽象类什么区别？
 
 
 
-
+foreach:
+https://segmentfault.com/a/1190000020149527?utm_source=tag-newest
 
 
 
@@ -21,3 +22,4 @@ default关键字 接口里面写方法？那接口与抽象类什么区别？
 
 ------------
 lambda exper
+

@@ -1,0 +1,23 @@
+<script type="text/javascript">
+    //更改三反引号格式的语言数据 三反引号自动生成<pre><code>content</code></pre>格式
+    //将code标签去掉，内容移动到pre标签，给pre标签加上class
+
+    var codes = document.querySelectorAll("code");
+    for(i=0; i < codes.length; i++){
+
+        var className = codes[i].className;
+        if(className && className.startsWith("language-brush:")){
+            var brush = className.slice("language-".length);
+
+            var pre = codes[i].parentNode;
+            pre.classList.add(brush);
+
+            pre.removeChild(pre.firstChild);
+            pre.appendChild(codes[i].firstChild);
+        }
+    }
+
+    SyntaxHighlighter.config.tagName="pre";
+    SyntaxHighlighter.defaults['toolbar']=false;
+    SyntaxHighlighter.all();
+</script>

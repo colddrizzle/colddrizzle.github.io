@@ -26,11 +26,13 @@ tags : [python, socket, udp]
 无论UDP还是TCP，虽然一次传输涉及两端地址，但是作为发送端只需要明确自己的目的地址，可以不设置源地址。
 对于接收端只要明确自己以哪个地址来接收，接收端不需要也不能设置下一次传输的源地址。
 
-1. 发送接收模式 RECV端:`create, [setsockopt], bind, (recv/recvfrom)` SEND端:`create, [setsockopt], sendto` 
+1. 发送接收模式:只需要一边bind。 RECV端:`create, [setsockopt], bind, (recv/recvfrom)` SEND端:`create, [setsockopt], sendto` 
 
-2. 对等模式: 一端:`create, bind, sendto` 另一端:`create, bind, sendto`
+2. 对等模式:两边bind。 一端:`create, bind, sendto/recv/recvfrom` 另一端:`create, bind, recv/recvfrom/sendto`
 
-3. 仿CS模式: C端: `create, connect, (sendto/recv/sendto/recvfrom)` S端:`create, bind, (recv/sendto/recvfrom/sendto)`
+3. 仿CS模式: 一边connect，另一边bind。C端: `create, connect, (send/recv/sendto/recvfrom)` S端:`create, bind, (recv/send/recvfrom/sendto)`
+
+其实TCP也可以两边都bind，但不是对等模式，因为必然要有一端先connect，因此我们认为TCP只有一种CS模式。
 
 注意在第1与第3中模式里，先发送的一端都没有指定源IP地址，系统会自动选择一个，有时候这个选择的IP并不是我们期望使用的。
 

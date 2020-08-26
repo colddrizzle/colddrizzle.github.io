@@ -17,3 +17,12 @@ https://blog.csdn.net/lincifer/article/details/53191961
 
 调用textarea.value并不会触发oninput事件，这有时候带来便利，但有时候我们希望能手动触发该事件。参考下面例子
 https://blog.gxxsite.com/manual-trigger-oninput-event/
+
+
+网络安全：
+为什么使用HTTPS:https://zhuanlan.zhihu.com/p/72616216 
+	里面似乎没有提到DNS污染，这属于身份认证的范畴
+
+SSL原理：https://www.iteye.com/blog/iluoxuan-1736275
+中间人攻击：https://www.cnblogs.com/lulianqi/p/10558719.html
+	中间人攻击包括多种手段，是一类攻击手段

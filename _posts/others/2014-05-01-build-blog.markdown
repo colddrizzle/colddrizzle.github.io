@@ -61,10 +61,12 @@ https协议的地址可以在github仓库的页面找到,使用https协议可以
 这样修改的目的将在下文说明。
 然后修改`_config.yml`的comment provider为disqus，short_name设置为在disqus上添加站点时设置的shortname，以后可以从disqus上集中看自己的评论，删除评论。
 可以在Disqus的站点下设置允许接收匿名评论（即作为guest访问），在Disqus账户中设置不接收Disqus摘要以去掉广告:)
+
 3. __中文支持__：包括两个部分：jekyll的中文直接和Markdown的中文支持。前者在`_config.yml`中配置`encoding:utf-8`，以后凡是出现中文的文件都要在无BOM的UTF-8格式下编辑;
 修改`permalink: /:categories/:year/:month/:day/:title`，将`/:categories`去掉以免分类出现在链接中；同时注意以后自己添加post的时候添加title:中文题目，因为jekyll使用
 文件名`yyyy-mm-dd-post-name.md`生成链接，所以post-name必须是英文，而若不在post中提供title，jekyll将使用文件名中的post name作为post标题，这样post的题目就必须是英文了，非常的不方便。
 Markdown的中文支持则是在`_config.yml`中配置`markdown:rdiscount`。rdiscount是一个支持中文的markdown引擎。
+
 4. __代码高亮__：使用google code prettify或者syntaxhighlighter或者jekyll自带的pygments。
 我使用的是syntaxhighlighter,因为它的功能较强大一些。但这种方法插入代码时候需要使用pre标签，pre标签会让内部的<,&符号得不到转义，从而影响html的解析。但若是使用其他的块标签将导致
 代码的原有格式被打乱,code标签会导致markdown添加的pre标签成为代码的一部分而被显示出来。我的解决办法是在markdown中需要插入代码的地方之前加上一行:  
@@ -89,6 +91,15 @@ class属性。定位这个pre标签自然是根据上面的input标签，我的j
 </pre>
 
 可以看到add_comment()在页面完加载并且代码高亮渲染完之后调用，这样是避免访问disqus.com时网速过慢从而导致整个页面卡在这儿（顺便吐槽学校的破网速:<），从而导致jquery的ready方法无法执行，从而无法渲染代码。
+
+对于pre内尖括号影响html解析的办法，原来需要加一个隐藏的input，最新的写法为在markdown默认支持的三反引号后面注上Syntaxhighlighter风格的class属性。本来呢markdown引擎会将第一个三反引号后面的东西当成指示的语言名字，然后将这个语言设置到生成的code标签上，这里利用了他，具体参见`JB/syntax`中的实现。新的写法比较简洁，如下：
+
+<pre>
+```brush:lang-code
+your codes
+```
+</pre>
+
 5. __添加站点统计__：我使用的是cnzz，首先是去cnzz注册并添加自己的站点，然后cnzz会给你一段js代码，将这段代码保存为cnzz文件并拷贝到`_includes\JB\analytics-providers\`目录下，修改
 _includes\JB\analytics文件，仿照其格式添加：
 

@@ -75,6 +75,10 @@ https://eli.thegreenplace.net/2011/09/06/stack-frame-layout-on-x86-64/
 
 主要讲了x86-64下的栈帧结构，与x86基本相同。提到了AMD64 ABI定义的red zone--一种叶子函数的优化。另外提到了rbp寄存器对于编译器来讲，其实不需要，编译器可以根据rsp来推算。
 
+看完上面这篇文章要注意：一个过程的栈帧是从EBP到ESP之间的前开后闭的区间。EBP确实指向当前过程的帧低，但这个帧低里保存的内容
+却是上一个过程的EBP，也就是说EBP指向的栈的位置实际存储的东西不是当前过程的，而ESP指向栈顶元素而不是栈顶的下一个可用地址，这就是
+为什么说前开后闭的原因了。
+
 http://www.unixwiz.net/techtips/win32-callconv-asm.html
 
 从函数调用规范(function-call conventions)方面来看栈,其中提到`__cdecl`与`__stdcall`两种的区别，前者可传可变长的参数，由调用者来释放参数内存，后者不能，因此可以有被调用者来
@@ -86,6 +90,11 @@ https://www.cnblogs.com/bangerlee/archive/2012/05/22/2508772.html
 
 https://en.wikipedia.org/wiki/Call_stack
 
+更多资料：
+
+https://www.cnblogs.com/samo/articles/3092895.html
+
+https://blog.csdn.net/Hello_Sue/article/details/79515183
 
 [0]:/assets/resources/stack_frame_1.png
 [1]:/assets/resources/stack_frame_2.png

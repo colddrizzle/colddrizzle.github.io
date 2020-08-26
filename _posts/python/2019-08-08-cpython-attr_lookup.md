@@ -391,6 +391,42 @@ python [doc](https://docs.python.org/2.7/reference/datamodel.html#customizing-at
 
 https://www.cnblogs.com/xybaby/p/6270551.html
 
+## Questions:
+
+1. 解释如下设置属性的差异
+
+```brush:python
+import sys
+f = sys._getframe()
+f.a = 1 # No such attribute
+
+class A(object):
+  pass
+
+a = A()
+a.b = 1 # Fine!
+```
+
+`PyFrame_Type`与自定义类型([源码][9])一样，其`tp_setattro`字段都是`PyObject_GenericSetAttr`。
+区别在于自定义类型创建的对象拥有`__dict__`字段，而`PyFrame_Type`创建的对象则没有。
+
+根据[`_PyObject_GenericSetAttrWithDict`][8]，代码中会通过`_PyObject_GetDictPtr`来获得对象的字典，
+而`PyFrameObject`是没有这个对象的。`_PyObject_GetDictPtr`方法通过字段`tp_dictoffset`来判断是否有dict，
+对于PyFrame_Type，这个字段是没有设置的，而对于自定义类型，其设置是根据base类型来的，[源码][10]。
+
+```brush:c
+
+may_add_dict = base->tp_dictoffset == 0;
+
+```
+显然自定义类型的base类型为object，object中`tp_dictoffset字段`为0。
+
+2. name mangling
+
+参考：https://stackoverflow.com/questions/44114560/how-to-access-double-underscore-variables-in-methods-added-to-a-class
+
+
+
 
 [0]:https://docs.python.org/2.7/reference/datamodel.html#customizing-attribute-accesss
 [1]:https://github.com/python/cpython/blob/2.7/Python/ceval.c#L2555
@@ -400,3 +436,6 @@ https://www.cnblogs.com/xybaby/p/6270551.html
 [5]:https://github.com/python/cpython/blob/2.7/Objects/typeobject.c#L5652
 [6]:https://github.com/python/cpython/blob/2.7/Objects/typeobject.c#L6054
 [7]:/2019/08/13/cpython-slots
+[8]:https://github.com/python/cpython/blob/2.7/Objects/object.c#L1470
+[9]:https://github.com/python/cpython/blob/2.7/Objects/typeobject.c#L2495
+[10]:https://github.com/python/cpython/blob/2.7/Objects/typeobject.c#L2190
