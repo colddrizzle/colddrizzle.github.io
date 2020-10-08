@@ -1,0 +1,1 @@
+如何选择开源软件license:https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/licensing-a-repository

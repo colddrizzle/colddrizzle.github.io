@@ -150,3 +150,10 @@ java冷知识：https://segmentfault.com/a/1190000021101318?utm_source=tag-newes
 
 java版本相关：
 https://www.zhihu.com/question/360985479
+
+
+java9 release note：可以通过这个查看变更与新特性
+https://www.oracle.com/java/technologies/javase/v9-issues-relnotes.html
+
+
+java标准工具的文档：https://docs.oracle.com/en/java/javase/14/docs/specs/man/index.html
