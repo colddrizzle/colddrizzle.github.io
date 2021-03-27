@@ -16,7 +16,7 @@
             pre.appendChild(codes[i].firstChild);
         }
     }
-
+    //SyntaxHighlighter.config.clipboardSwf = 'syntaxhighlighter/scripts/clipboard.swf';
     SyntaxHighlighter.config.tagName="pre";
     SyntaxHighlighter.defaults['toolbar']=false;
     SyntaxHighlighter.all();
