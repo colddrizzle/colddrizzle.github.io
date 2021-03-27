@@ -116,7 +116,7 @@ void thread_destroy(__THREAD * t){
     free(t);
     
 }
-void thread_wrapper(__THREAD * t){
+void run_thread(__THREAD * t){
     t->func();
     thread_destroy(t);
     
@@ -183,7 +183,7 @@ void schedule(){
                         }else{
                             v("tid %d begin run\n", current->tid);
                             SAVE_RBP(t->rbp);
-                            thread_wrapper(t);
+                            run_thread(t);
                         }
                     }
                 }else if(t->status == 2){

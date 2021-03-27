@@ -131,15 +131,30 @@ A class definition is an executable statement that may use and define names. The
 一个类定义是一个可执行语句，其中可能定义或者使用名字。这些引用遵循名字解析的一般规则。类定义的名字空间称为类的属性字典。类定义域内定义的名字在方法中不可见。
 
 ## 问答
-1. Q: 什么是自由变量？
+
+
+#### Q: 什么是the enclosing scope？
+
+A: python文档与pep中并未给出定义，似乎是计算机语言学中既有的说法，但可以参考[stackoverflow][5]:Names assigned in the local scope of any and all statically enclosing functions (def or lambda), from inner to outer. 那么在python中，只有函数或者lambda、列表生成表达式才是封闭作用域。
+
+
+#### Q: 名字绑定与解析的区别
+
+A: 名字绑定就是将名字字符串绑定到其所对应的对象。
+因为作用域是层层嵌套的，名字解析就是决定名字访问作用域里哪一个名字，因此与其称名字解析不如称作用域解析。
+
+
+#### Q: 什么是自由变量？
 
 A: 本文中有定义：在代码块中使用但未定义。
 
 但还有另一种看法，根据[stackoverflow上的一个回答][2]，自由变量是指在本代码块中有使用且未在globals中找到但最终又在运行时某个封闭作用域内找到绑定的名字。
 
-仔细理解下这个定义，如果在本代码块中有定义且未在globals中有定义，那么这个名字未定义，所以但是未定义不是自由变量，因此自由变量最终要在某个封闭作用域（一定是封闭作用域，因为类作用域不向下扩展，而只有三种作用域：module、class、封闭作用域（函数或lambda或生成器表达式））内找到定义。
+stackoverflow上的这个说法本来没什么问题，但是[官方文档的这个例子][6]里明确称那个变量为自由变量，这不符合Stack Overflow上的定义。
 
-其实我认为文档的说法比较根本，而stackoverflow中的回答只是解释了为什么我们在locals()函数或者`sys._getframe().f_code.vo_freevars`中看不到“使用但不定义在此处”的全局变量---仅仅是因为这些名字最终在全局名字空间中被找到了。
+仔细理解下这个定义，如果在本代码块没有定义且未在globals中有定义，那么它不一定是自由变量，因为自由变量最终要在某个封闭作用域（一定是封闭作用域，因为类作用域不向下扩展，而只有三种作用域：module、class、封闭作用域（函数或lambda或生成器表达式））内找到定义。
+
+Stack Overflow上的说法比较全面，文档的说法比较根本，stackoverflow中的回答解释了为什么我们在locals()函数或者`sys._getframe().f_code.vo_freevars`中看不到“使用但不定义在此处”的全局变量---仅仅是因为这些名字最终在全局名字空间中被找到了。
 
 其实这两种理解哪种准确不重要，最重要的是上文python标准文档中下面这句话：
 
@@ -177,6 +192,7 @@ For example:
 x is not free in Code 1, because it's a global variable.
 x is not free in bar() in Code 2, because it's a bound variable.
 x is free in foo().
+
 Python makes this distinction because of closures. A free variable is not defined in the current environment, i. e. collection of local variables, and is also not a global variable! Therefore it must be defined elsewhere. And this is the concept of closures. In Code 2, foo() closes on x defined in bar(). Python uses lexical scope. This means, the interpreter is able to determine the scope by just looking at the code.
 
 For example: x is known as a variable in foo(), because foo() is enclosed by bar(), and x is bound in bar().
@@ -191,15 +207,23 @@ Life is not so simple. There exist free global variables. Python docs (Execution
 
 ```brush:python
 x = 42
-def foo()
-	global x
-	def baz():
-		print(x)
-		print(locals())
-	baz()
-
+def foo():
+    global x
+    x=5
+    def baz():
+        print(x)
+        print(locals())
+    baz()
+ 
 foo()
+
+# output:
+# 5
+# {}
 ```
+
+可以看到，看起来x似乎是baz()的自由变量，但x在foo()中早就被声明为全局变量。因此，x不再是baz()的自由变量。
+
 
 关于自由变量值得注意的有两点，一是上本提到过的自由变量的解析是在运行时进行的，编译时仅仅能确定一个名字是否自由变量，但是没有相应的绑定。
 
@@ -232,16 +256,13 @@ f()
 
 ```
 
-2. Q: 什么是the enclosing scope？
 
-A: python文档与pep中并未给出定义，似乎是计算机语言学中既有的说法，但可以参考[stackoverflow][5]:Names assigned in the local scope of any and all statically enclosing functions (def or lambda), from inner to outer.
-
-3. Q: 名字空间、作用域、执行环境怎么区分？
+#### Q: 名字空间、作用域、执行环境怎么区分？
 
 A: 每个PyFrameObject有三个名字空间：builtins、locals、globals。 变量比如定义在代码块中，在这个代码块以及包含的代码块中该变量的可见性就叫做该变量的作用域，作用域只会向内扩展，不会向外扩展。
 因为作用域会扩展，一个代码块可以看到来自代码块外的变量，该代码块所看到的所有变量就叫做该代码块的执行环境。这个执行环境划定了这个代码块可以看到的所有变量。
 
-4. Q: 什么是builtins、locals、globals名字空间？
+#### Q: 什么是builtins、locals、globals名字空间？
 内建模块__builtins__中的名字会被放在一个单独的名字空间中，被每一个PyFrameObject以builtins引用。
 直接（不包括嵌套）在代码块中声明的变量就是该代码快的locals命名空间。
 代码块所在的模块中定义（或者通过import引入）的名字就是globals名字空间。
@@ -271,26 +292,27 @@ foo()
 对于一个名字，解析的时候一层层往上找（因为是函数嵌套，通过PyFrameObject的f_back字段很容易找到其调用者也就是外层封闭作用域），如果在一层作用域的locals中找到就绑定，
 最后在globals中寻找或者最终找不到。
 
-5. Q: 名字绑定是什么？
+#### Q: 名字绑定是什么？
 
 A: 所谓名字绑定就是将名字放到其作用域内各个代码块的三个名字空间的过程。一个名字只能被绑定到模块级别称为全局变量，或者被绑定到代码块级别称为该代码块局部变量。
 
-6. Q:名字绑定与解析的一般规则是什么？
+#### Q:名字绑定与解析的一般规则是什么？
 
 A: LEGB规则。参考[stackoverflow][5]。 关于绑定，以为python是以为文件为单位编译的，而文件是module级别的，定义在module级别的名字都是全局变量，定义在非module基本的都是local变量，
 因此编译的时候python就能确定哪些名字是全局并绑定，哪些名字是local并绑定，确定哪些名字是自由变量但是不绑定或者说解析，自由变量的解析是运行时依照LEGB运行的（除了exec中的自由变量，参考《python exec()与名字解析》篇）
 
-7. Q: 更多关于global语句
+#### Q: 更多关于global语句
 
 A:参考标准文档:[global statement][1]。
 global语句仅仅是做名字解析的时候去globals名字空间去找，并非将该名字绑定到globals名字空间。
 
-8. Q: 关于P3中新增的nolocal语句。
+#### Q: 关于P3中新增的nolocal语句。
 
 A: 参考[简谈Python3关键字nonlocal使用场景][7]。[stackoverflow:Why doesn't Python's nonlocal keyword like the global scope?][9]。
 
-9. Q: 关于locals()语义的理解。[p3文档][8]提到:Free variables are returned by locals() when it is called in function blocks。有人据此在bugs.python.org提了两个[issue 28853][3]与[issue 26683][4]，
-认为locals的语义不清，其实我认为就是因为locals实现将那些最终在globals中找到的自由变量不算做自由变量了。
+#### Q: 关于locals()语义的理解。
+
+A: [p3文档][8]提到:Free variables are returned by locals() when it is called in function blocks。有人据此在bugs.python.org提了两个[issue 28853][3]与[issue 26683][4]，认为locals的语义不清，其实我认为就是因为locals实现将那些最终在globals中找到的自由变量不算做自由变量了。
 
 ## MORE
 更多资料：
