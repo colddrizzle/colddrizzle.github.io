@@ -1,8 +1,12 @@
 @echo off
 
+if exist .git (
+    rmdir /s /q .git
+)
 
-rmdir /s /q .git
-del /f /q data0.txt
+if exist data0.txt (
+    del /f /q data0.txt
+)
 
 git init
 

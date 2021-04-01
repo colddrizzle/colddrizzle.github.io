@@ -170,3 +170,28 @@ A
 B
 C
 ```
+
+# 测试文件是否存在
+
+```brush:bash
+if  条件 ( //条件前后要留出空格
+
+) else (
+
+)
+
+```
+
+# 条件分支
+
+```brush:bash
+
+
+SET SourceFile=%cd%\updater.exe
+ 
+if exist %SourceFile% ( 
+) else (
+    //你要做的事情
+)
+
+```
