@@ -272,6 +272,12 @@ print sys._getframe()
 
 ```
 
+### 问题
+
+1. 隐式导入的问题
+
+2. 相对导入并不能应用于main模块所在目录，main模块所在目录存在隐式导入的问题吗
+
 
 [0]:https://www.python.org/doc/essays/packages/
 [1]:https://docs.python.org/2/reference/simple_stmts.html#the-import-statement

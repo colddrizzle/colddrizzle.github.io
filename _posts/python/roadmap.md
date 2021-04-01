@@ -55,10 +55,26 @@ python中int为什么不溢出：
 https://www.cnblogs.com/ChangAn223/p/11495690.html
 
 
+为什么python不需要接口？
+https://www.cnblogs.com/feichengwulai/articles/3632490.html
+
+
+python正则表达式：
+https://www.runoob.com/python/python-reg-expressions.html
+
+python open模式区别:
+https://www.cnblogs.com/dadong616/p/6824859.html
+
+
+python二维转一维的技巧：
+https://blog.csdn.net/qq_44205272/article/details/105073273
+
+
 python泛型？
 首先，python不是弱类型语言吗？什么时候也需要泛型了
 https://blog.csdn.net/weixin_36338224/article/details/109014854
 
 
 一种观点：不要再使用lambda表达式：https://blog.csdn.net/sinat_38682860/article/details/83933866
+
 

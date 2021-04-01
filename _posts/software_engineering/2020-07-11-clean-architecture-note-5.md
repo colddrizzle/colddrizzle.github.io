@@ -305,6 +305,9 @@ You should recognize this as an application of the Dependency Inversion Principl
 
 
 ## 19. 策略与层次
+A strict definition of “level” is “the distance from the inputs and outputs.” The farther a policy is from both the inputs and the outputs of the system, the higher its level. The policies that manage input and output are the lowest-level policies in the system.
+
+	我们对“层次”是严格按照“输入与输出之间的距离”来定义的。也就是说，一条策略距离系统的输入/输出越远，它所属的层次就越高。而直接管理输入/输出的策略在系统中的层次是最低的。
 
 
 ## 20. 业务逻辑

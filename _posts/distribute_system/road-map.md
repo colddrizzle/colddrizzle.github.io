@@ -9,7 +9,9 @@ The Implementation of Reliable Distributed Multiprocess Systems 为第2.
 一切都在lamport的网站上。
 
 
-
+分布式一致性协议：
+https://www.cnblogs.com/linbingdong/p/6442673.html
+https://www.zhihu.com/question/19787937 朱一聪的回答
 
 
 -------------------------

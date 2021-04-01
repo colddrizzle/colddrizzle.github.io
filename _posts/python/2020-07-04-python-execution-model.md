@@ -63,6 +63,10 @@ class A:
 
 从图中可见，定义在函数与文件中非常相似，都会向其包含的代码块扩展。
 
+
+其实，除了模块、类、函数之外，if、try...except语句也会构成一个小的作用域范围，定义在其内部的变量，外部不可见。但是python文档执行模型通篇没有提到
+，不知道为什么。
+
 If a name is bound in a block, it is a local variable of that block. If a name is bound at the module level, it is a global variable. (The variables of the module code block are local and global.) If a variable is used in a code block but not defined there, it is a free variable.
 
 如果一个名字在一个代码块内被绑定，它就是那个代码块的一个局部变量(local variable)。如果一个名字绑定在模块级别，它就是一个全局变量（global variable）。（模块代码块中定义的变量既是局部的，也是全局的）。如果一个变量
