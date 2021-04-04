@@ -28,10 +28,72 @@ SSL原理：https://www.iteye.com/blog/iluoxuan-1736275
 	中间人攻击包括多种手段，是一类攻击手段
 
 
-es6 module
-https://zhuanlan.zhihu.com/p/106884635?utm_source=wechat_timeline
-http://caibaojian.com/es6/module.html
+
+	____________________________________
+
+CSS:
 
 css layout
 https://segmentfault.com/a/1190000009139500?utm_source=sf-similar-article
 https://www.runoob.com/w3cnote/css-position-static-relative-absolute-fixed.html
+
+
+	________________________________________________________
+
+JS
+
+es6 module
+https://zhuanlan.zhihu.com/p/106884635?utm_source=wechat_timeline
+http://caibaojian.com/es6/module.html
+
+模块加载后缀名：https://blog.csdn.net/edc3001/article/details/86763073
+
+JS：弱引用 yield 用yield实现range
+
+弱引用：
+https://segmentfault.com/a/1190000023340253
+https://blog.csdn.net/gao_xu_520/article/details/79999824
+
+
+es5 es6 typescript:
+
+https://www.jianshu.com/p/b2f544d7686e
+https://zhuanlan.zhihu.com/p/98709371
+
+
+	————————————————————————————————————————————————————————————
+
+VUE
+
+.vue文件与vue-loader 以及一堆构建工具
+
+
+前端路由是什么意思
+https://segmentfault.com/a/1190000011967786
+https://www.zhihu.com/question/53064386
+http://www.divcss5.com/html/h55258.shtml
+
+不使用构建工具单使用vue的相关讨论
+https://segmentfault.com/q/1010000012769694
+https://www.zhihu.com/question/66400933?sort=created
+
+将vue当做模块引入：
+
+https://m.html.cn/web/vue-js/12595.html
+
+```
+<script type="module">
+  import * as Vue from 'https://unpkg.com/vue@2.6.0/dist/vue.esm.browser.min.js';
+  new Vue({
+    ...  
+  });
+</script>
+```
+
+渐进式学习vue：
+https://www.jianshu.com/p/89a7d14d21aa
+
+不使用vue但实现模块化的一个思路：
+https://refined-x.com/2017/10/28/%E5%A6%82%E4%BD%95%E4%B8%8D%E7%94%A8%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7%E5%BC%80%E5%8F%91Vue%E5%85%A8%E5%AE%B6%E6%A1%B6%E9%A1%B9%E7%9B%AE/
+
+	——————————————————————————————————————————————————————————————————————————
