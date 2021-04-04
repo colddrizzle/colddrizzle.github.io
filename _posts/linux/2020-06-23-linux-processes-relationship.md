@@ -159,6 +159,8 @@ https://stackoverflow.com/questions/11120202/when-is-setsid-useful-or-why-do-we-
 
 https://unix.stackexchange.com/questions/240646/why-we-use-setsid-while-daemonizing-a-process
 
+https://stackoverflow.com/questions/19746719/why-we-need-to-create-a-new-session-for-daemon/19746912#19746912
+
 [10]:https://www.cnblogs.com/mickole/p/3188321.html
 [11]:https://blog.csdn.net/kwinway/article/details/80141242
 [12]:https://www.ibm.com/developerworks/cn/linux/1702_zhangym_demo/
