@@ -35,3 +35,20 @@ http://caibaojian.com/es6/module.html
 css layout
 https://segmentfault.com/a/1190000009139500?utm_source=sf-similar-article
 https://www.runoob.com/w3cnote/css-position-static-relative-absolute-fixed.html
+
+前端存储indexdb：https://www.jianshu.com/p/bb116c7a74b3
+
+
+c10k问题：https://zhuanlan.zhihu.com/p/61785349
+
+
+
+selection接口：
+basenode与extendnode是anchornode与focusnode的别名
+
+一个selection包含多个拖蓝也就是range，但一般用鼠标操作只能获得一个拖蓝。
+
+range的endcontainer有时候会变成下一个元素但其offset为0，这时候应当使用类似于字符串strip的方法将其去掉。
+
+selection的选取顺序仅依赖于dom顺序，css不会改变这个顺序。比如自上而下三个p元素，使用css将第二个p元素放在最下面。鼠标拖动选择第一第三个的时候还是会选择上第二个，
+尽管鼠标看上去没有从第二个p上面划过。
