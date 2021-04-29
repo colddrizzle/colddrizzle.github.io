@@ -82,6 +82,10 @@ https://news.ycombinator.com/item?id=13930305
 
 综合上面的资料可以一次上下文切换包括建立新的地址空间大约需要1μs到10μs之间。
 
+
+
+对于一个运行着 UNIX 系统的现代 PC 来说， 进程切换通常至少需要花费 300 us 的时间。这个数据来源于https://www.zhihu.com/question/19732473/answer/241673170
+
 ## 函数调用的开销
 
 ## 时钟中断的开销

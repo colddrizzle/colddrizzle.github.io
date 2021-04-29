@@ -97,3 +97,23 @@ https://www.jianshu.com/p/89a7d14d21aa
 https://refined-x.com/2017/10/28/%E5%A6%82%E4%BD%95%E4%B8%8D%E7%94%A8%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7%E5%BC%80%E5%8F%91Vue%E5%85%A8%E5%AE%B6%E6%A1%B6%E9%A1%B9%E7%9B%AE/
 
 	——————————————————————————————————————————————————————————————————————————
+
+
+
+
+
+## 浏览器标注插件
+
+基本逻辑
+
+监听鼠标释放事件
+
+事件发生时，使用window.getSelection()函数获取选取的内容，
+若选取内容不为空，则在页面上弹出标注菜单。
+
+上面的函数获取的selection内容，会给出其anchorNode，进而可以获取其parentNode，以至于到根，从而获得标注内容的路径。
+
+如果选择了多个内容又会怎么样呢？那要看selection这个数据结构是怎么定义的。
+
+SelectionAPI探究
+https://blog.csdn.net/hjb2722404/article/details/110954436

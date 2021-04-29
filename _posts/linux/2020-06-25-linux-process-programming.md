@@ -194,6 +194,8 @@ system函数的返回应该是函数中创建子进程的返回状态。所以�
 还可以参考Stackoverflow上的一条[问题讨论][3]。
 
 ### 更多关于僵尸进程、孤儿进程的资料
+理解两次fork之前，先阅读[Linux进程编程相关 ][12]。
+
 [两次fork][4]。
 
 [孤儿进程僵尸进程][5]。
@@ -226,6 +228,8 @@ setpgid并不像它的名字看起来的那样简单明了，有很多规则：
 	 sion (i.e., its process group ID is made the same as its process ID).
 
 与其称其为设置会话，不如称之为创建新会话。 调用setsid的进程本身不能是一个组长进程。调用后该进程称为新的session leader与group leader。
+
+setsid()是设置当前进程，若当前进程已经是一个session leader，则会调用失败。
 
 ## pause与sleep
 pause与sleep都将使调用进程挂起，直到未被忽略的任何信号到来或者sleep超时。
@@ -296,6 +300,101 @@ int main(){
 
 ## 守护进程
 
+参考《Linux进程、线程组织关系》篇。
+
+![img](/assets/resources/create_daemon.png){:width="80%"}
+
+例子1：
+
+```brush:c
+#include<stdio.h>
+#include<unistd.h>
+#include<sys/types.h>
+#include<sys/stat.h>
+#include<fcntl.h>
+#include<string.h>
+#include<stdlib.h>
+#include<signal.h>
+#include<sys/time.h>
+#include<time.h>
+ 
+//通过宏定义文件名
+#define _FILE_NAME_FORMAT_ "%s/log/mydaemon.%ld" //定义文件格式
+ 
+void touchfile(int num){
+    //获取家目录
+    char *HomeDir=getenv("HOME");
+    char strFilename[250]={0};
+    //获取时间戳的函数
+    //time(NULL);
+    sprintf(strFilename, _FILE_NAME_FORMAT_, HomeDir, time(NULL));
+ 
+    int fd=open(strFilename, O_RDWR|O_CREAT, 0666);
+    //文件打开失败
+    if(fd<0){
+        perror("open err");
+        exit(1);
+    }
+    close(fd);
+}
+ 
+int main(){
+    //创建守护进程的步骤如下
+    //创建子进程，父进程退出
+    pid_t pid=fork();
+    if(pid>0){
+        exit(1);
+    }
+    //当会长
+    setsid();
+    //设置掩码
+    umask(0);
+    //切换目录
+    //getenv获取环境变量
+    chdir(getenv("HOME"));//切换到家目录
+    //关闭文件描述符(一般通过测试之后，才会关闭文件描述符)
+    //close(0),close(1),close(2)
+ 
+    //执行核心逻辑
+    //设置一个定时器——每60秒来一次
+    struct itimerval myit={ {60,0},{60,0} };
+    setitimer(ITIMER_REAL, &myit, NULL);
+    //注册捕获函数
+    struct sigaction act;
+    act.sa_flags=0;
+    //清空阻塞信号集
+    sigemptyset(&act.sa_mask);
+    //绑定捕获函数
+    act.sa_handler=touchfile;
+    //注册捕获函数
+    sigaction(SIGALRM, &act, NULL);
+    while(1){
+        //每隔一秒在/home/itheima/log创建文件
+        sleep(1);
+    }
+    
+    return 0;
+}
+
+```
+
+## 两次fork魔法
+
+关于两次fork的作用，查了很多资料，发现存在不少混淆的情况。总结来看，两次fork有两种目的：
+
+其一，创建daemon进程，两次fork能确保最终创建的进程没有关联控制终端，从而到达“守护”目的。
+
+其二，daemon创建子进程时防止产生僵尸进程。第一次fork的父进程必须运行（因为是daemon进程）又不想用wait()之类的检查子进程的结束状态，这样第二次fork的子进程的父进程就能推出且确保子进程结束时有人（init进程）管理。
+
+无论那种目的，两次fork都不是唯一解。
+
+第一种情况而言，实际上，在linux文档中写的很清楚，setsid()之后新会话不会关联控制终端，是没有必要的。
+[资料](https://segmentfault.com/a/1190000008556669)与[资料](https://www.kawabangga.com/posts/3849)说的就是这种情况。
+
+第二种情况而言，上面也提到过，在内核2.6之后可以显示忽略SIGCHLD信号，从而不会产生僵尸进程，或者使用wait()回收子进程运行结果。
+[资料][4]说的就是这种情况。
+
+总而言之，两次fork是一种古老的技术，有点过时。需要注意的是网上很多资料混淆了两种目的。
 
 [0]:https://stackoverflow.com/questions/16078985/why-zombie-processes-exist/16167157#16167157
 [1]:https://stackoverflow.com/questions/40601337/what-is-the-use-of-ignoring-sigchld-signal-with-sigaction2/40601403#40601403
@@ -306,3 +405,5 @@ int main(){
 
 [10]:https://stackoverflow.com/questions/50591754/can-the-first-argument-to-setpgid-be-a-session-leader-or-a-group-leader?r=SearchResults
 [11]:https://stackoverflow.com/questions/50591754/can-the-first-argument-to-setpgid-be-a-session-leader-or-a-group-leader
+
+[12]:/2020/06/25/linux-process-programming

@@ -42,10 +42,16 @@ fork创建的进程自动建立父子关系。父子关系建立后除非进程�
 
 会话与进程组被抽象设计出来用于支持Shell Job控制。一个进程组（有时候称之为一个Job）是相同组ID的一组进程。shell会为单个执行的命令或者管道命令组（比如`ls|wc -l`）创建一个新的进程组。组ID与自身ID的相等的进程是这个组的group leader进程。
 
-group leader进程退出，进程组仍然存在，并不会自动选举新的leader，仍然可以向该进程组发消息（比如kill -sig -pgid）
+group leader进程退出，进程组仍然存在，并不会自动选举新的leader，仍然可以向该进程组发消息:
+```brush:bash
+ps -o pgid <your pid>
+
+# 向进程组发信号前面要加个负号
+kill -9 -<your pgid> 
+```
 
 会话是相同会话ID的进程集合。一个进程组的所有成员必然拥有相同的会话ID（也就说一个进程组所有成员只会属于一个会话，会话与进程组构成一个严格的二级层级关系）。
-进程调用setsid来创建一个新会话，新会话的ID与其进程ID相同，创建成功后调用者成为该会话的session leader。无论如何，一个session leader总是一个group leader。
+进程调用setsid来创建一个新会话，新会话的ID与其进程ID相同，创建成功后调用者成为该会话的session leader，新会话自然需要新group leader，也是他自己。无论如何，一个session leader总是一个group leader。
 
 session leader进程退出，会话仍然存在，并不会自动选举新的leader。
 
@@ -60,12 +66,14 @@ session leader进程退出，会话仍然存在，并不会自动选举新的lea
 
 注意此处的会话与http中的session没有太大的关系，http中的session用来保持身份认证信息，而linux中登录的身份认证信息是通过连接来保持的，也就是通过终端来保持的。
 
+`setsid()`的执行后，会创建新会话以及进程组，调用进程会成为新会话和进程组的leader，因此，调用者在调用之前不能已经是leader，为了保证这一点，`setsid()`的man文档中提到，为了保证该函数执行成功，务必先执行一次`fork()`，在子进程中调用`setsid()`当可没问题。
+
 ### job与进程组的关系
 progress gounp与job本质上是同一个东西，只是命名不同，应用的场合略有不同，在内核环境中，通常称进程组，在shell层面或者用户操作层面，称之为job。并且同一个进程组或Job，其进程组ID与JobID不是相同数字。
 
 不要因为使用作业控制命令jobs无法查看系统中所有的进程组而误认为job与进程组不同。之所以无法查看仅仅是因为shell所在的terminal只能是当前session的控制终端，系统中其他session没有控制终端或者有其他的控制终端。
 
-有博客声称job中进程创建的子进程不属于该job。确实使用`jobs -l`查看job状态看到其子进程的PID，但是使用`kill -sig_num %job_id`向job发送信号其子进程依然能收到信号。因此，job中创建的进程依然属于该job，如同man credentials中所讲的那样，进程组与job是同一个东西不同的命名，既然进程组中进程创建的子进程属于该进程组，job也理应如此。
+有博客声称job中进程创建的子进程不属于该job。确实使用`jobs -l`查看job状态看不到其子进程的PID，但是使用`kill -sig_num %job_id`向job发送信号其子进程依然能收到信号。因此，job中创建的进程依然属于该job，如同man credentials中所讲的那样，进程组与job是同一个东西不同的命名，既然进程组中进程创建的子进程属于该进程组，job也理应如此。
 
 ### 进程组、会话与父子关系
 
