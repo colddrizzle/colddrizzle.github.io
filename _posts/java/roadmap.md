@@ -162,3 +162,9 @@ java标准工具的文档：https://docs.oracle.com/en/java/javase/14/docs/specs
 java协程
 https://blog.csdn.net/jayjhwu/article/details/51248773
 
+
+java阻塞线程
+https://my.oschina.net/flashsword/blog/114527
+
+阻塞IO
+https://blog.csdn.net/u012063507/article/details/80319387
